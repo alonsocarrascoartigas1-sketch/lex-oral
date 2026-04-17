@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lex Oral — Simulador de Prueba Oral</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #faf9f7;
+  --bg2:   #ffffff;
+  --bg3:   #f4f2ed;
+  --bg4:   #ece9e2;
+  --bg5:   #e2dfd6;
+  --ink:   #1a1814;
+  --ink2:  #4a4540;
+  --ink3:  #8a8278;
+  --gold:  #b8902a;
+  --gold2: #d4a840;
+  --gold3: #7a6018;
+  --goldd: rgba(184,144,42,0.08);
+  --goldb: rgba(184,144,42,0.16);
+  --red:   #c0392b;
+  --grn:   #2e7a50;
+  --grn2:  #3a9660;
+  --bord:  rgba(26,24,20,0.10);
+  --bord2: rgba(26,24,20,0.06);
+  --shad:  0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shad2: 0 2px 8px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.06);
+  --fc: 'Cormorant Garamond', Georgia, serif;
+  --fb: 'Inter', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{font-family:var(--fb);background:var(--bg);color:var(--ink);}
+
+/* ══════════════════════════════════════════════════════════
+   SCREEN SISTEMA
+══════════════════════════════════════════════════════════ */
+.screen{display:flex;flex-direction:column;width:100%;min-height:100vh;}
+.screen.off{display:none !important;}
+#s-session{height:100vh;overflow:hidden;}
+
+/* ══════════════════════════════════════════════════════════
+   PANTALLA 1 — CONFIGURACIÓN
+══════════════════════════════════════════════════════════ */
+#s-config{
+  display:flex;flex-direction:column;align-items:center;
+  min-height:100vh;padding:32px 24px 40px;
+}
+
+/* HEADER */
+.cfg-header{
+  width:100%;max-width:860px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:32px;
+}
+.cfg-logo{display:flex;align-items:center;gap:10px;}
+.cfg-logo-box{
+  width:34px;height:34px;border-radius:8px;
+  background:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fc);font-size:18px;font-weight:700;color:var(--gold2);
+}
+.cfg-logo-text{font-family:var(--fc);font-size:20px;font-weight:600;letter-spacing:.06em;color:var(--ink);}
+.cfg-logo-text em{color:var(--gold);font-style:normal;}
+.cfg-srv{display:flex;align-items:center;gap:6px;font-family:var(--fm);font-size:10px;color:var(--ink3);letter-spacing:.05em;}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--ink3);}
+.sdot.ok{background:var(--grn2);box-shadow:0 0 6px rgba(58,150,96,.4);}
+.sdot.err{background:var(--red);}
+
+/* HERO */
+.cfg-hero{
+  width:100%;max-width:860px;
+  text-align:center;margin-bottom:36px;
+}
+.cfg-hero-title{
+  font-family:var(--fc);font-size:36px;font-weight:500;
+  line-height:1.2;color:var(--ink);letter-spacing:-.01em;
+  margin-bottom:10px;
+}
+.cfg-hero-title em{color:var(--gold);font-style:italic;}
+.cfg-hero-sub{font-family:var(--fb);font-size:15px;color:var(--ink3);line-height:1.6;}
+
+/* CARD CONTENEDOR */
+.cfg-card{
+  width:100%;max-width:860px;
+  background:var(--bg2);border:1px solid var(--bord);border-radius:16px;
+  padding:32px;display:flex;flex-direction:column;gap:28px;
+  box-shadow:var(--shad2);
+}
+
+/* SECTION TITLE */
+.s-title{
+  font-family:var(--fm);font-size:10px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:12px;
+}
+
+/* EVALUADORES GRID */
+.eval-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.ec{
+  padding:16px 10px;border:1px solid var(--bord2);border-radius:12px;
+  cursor:pointer;transition:all .15s;background:var(--bg3);
+  display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
+  position:relative;
+}
+.ec:hover{border-color:var(--bord);background:var(--bg4);transform:translateY(-2px);box-shadow:var(--shad);}
+.ec.active{border-color:var(--gold);background:var(--goldd);box-shadow:0 0 0 1px var(--gold),var(--shad);}
+.ec-icon{font-size:24px;}
+.ec-name{font-family:var(--fc);font-size:14px;font-weight:600;color:var(--ink);line-height:1.2;}
+.ec-desc{font-family:var(--fm);font-size:9px;color:var(--ink3);line-height:1.4;}
+.ec-check{
+  position:absolute;top:8px;right:8px;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--gold);display:none;
+  align-items:center;justify-content:center;
+  font-size:9px;color:var(--bg2);
+}
+.ec.active .ec-check{display:flex;}
+
+/* APUNTES */
+.apuntes-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:12px;}
+.upload-box{
+  border:1.5px dashed var(--bord);border-radius:10px;
+  padding:20px;text-align:center;cursor:pointer;transition:all .15s;
+  background:var(--bg3);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;
+}
+.upload-box:hover{border-color:var(--gold);background:var(--goldd);}
+.upload-box.has{border-color:var(--grn);border-style:solid;background:rgba(46,122,80,.05);}
+.upload-icon{font-size:26px;opacity:.4;}
+.upload-lbl{font-family:var(--fm);font-size:10px;color:var(--ink3);letter-spacing:.04em;}
+.upload-fn{font-family:var(--fm);font-size:10px;color:var(--grn2);font-weight:500;margin-top:2px;}
+#fi{display:none;}
+textarea.apunte-ta{
+  width:100%;min-height:80px;padding:14px 16px;
+  border:1px solid var(--bord2);border-radius:10px;
+  font-family:var(--fb);font-size:14px;line-height:1.55;
+  background:var(--bg3);color:var(--ink2);resize:none;outline:none;
+  transition:border-color .15s;
+}
+textarea.apunte-ta:focus{border-color:var(--gold);}
+textarea.apunte-ta::placeholder{color:var(--ink3);}
+
+/* FORMATO + INTENSIDAD */
+.fmt-int-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.pill-row{display:flex;gap:6px;flex-wrap:wrap;}
+.pill{
+  padding:8px 16px;border:1px solid var(--bord2);border-radius:20px;
+  cursor:pointer;transition:all .15s;background:var(--bg3);
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+}
+.pill:hover{border-color:var(--bord);}
+.pill.active{border-color:var(--gold);background:var(--goldd);color:var(--gold);}
+.pill-main{font-family:var(--fc);font-size:13px;font-weight:600;color:var(--ink);}
+.pill.active .pill-main{color:var(--gold);}
+.pill-sub{font-family:var(--fm);font-size:9px;color:var(--ink3);}
+
+.int-wrap{display:flex;flex-direction:column;gap:8px;}
+.int-labels{display:flex;justify-content:space-between;font-family:var(--fm);font-size:10px;color:var(--ink3);}
+.int-val{color:var(--gold);font-weight:500;}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--bg5);border-radius:2px;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:var(--gold);border-radius:50%;cursor:pointer;box-shadow:0 0 0 3px rgba(184,144,42,.15);}
+
+/* BOTÓN COMENZAR */
+.btn-comenzar{
+  width:100%;padding:16px;border-radius:12px;
+  font-family:var(--fc);font-size:18px;font-weight:600;letter-spacing:.04em;
+  background:var(--ink);color:var(--bg2);border:none;cursor:pointer;
+  transition:all .18s;box-shadow:0 4px 16px rgba(0,0,0,.12);
+}
+.btn-comenzar:hover{background:#2c2820;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.18);}
+.btn-comenzar:disabled{background:var(--bg5);color:var(--ink3);cursor:not-allowed;transform:none;box-shadow:none;}
+.btn-comenzar-note{font-family:var(--fm);font-size:10px;color:var(--ink3);text-align:center;margin-top:-16px;letter-spacing:.04em;}
+
+/* ══════════════════════════════════════════════════════════
+   PANTALLA 2 — SESIÓN
+══════════════════════════════════════════════════════════ */
+#s-session{
+  display:flex;flex-direction:column;height:100vh;
+}
+
+/* TOPBAR SESIÓN */
+.ses-bar{
+  height:52px;flex-shrink:0;
+  background:var(--bg2);border-bottom:1px solid var(--bord);
+  display:flex;align-items:center;padding:0 28px;gap:16px;
+  box-shadow:var(--shad);
+}
+.ses-logo{font-family:var(--fc);font-size:18px;font-weight:600;letter-spacing:.04em;color:var(--ink);cursor:pointer;}
+.ses-logo em{color:var(--gold);font-style:normal;}
+.ses-divider{width:1px;height:20px;background:var(--bord);}
+.ses-prof-tag{
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--fb);font-size:13px;font-weight:500;color:var(--ink2);
+}
+.ses-prof-icon{font-size:15px;}
+.ses-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.ses-badge{
+  font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 12px;border-radius:5px;border:1px solid;
+}
+.ses-badge.activa{color:var(--grn2);border-color:rgba(58,150,96,.3);background:rgba(58,150,96,.08);}
+.ses-badge.inactiva{color:var(--ink3);border-color:var(--bord);background:var(--bg3);}
+
+/* BODY SESIÓN: 3 COLS */
+.ses-body{
+  flex:1;min-height:0;
+  display:grid;
+  grid-template-columns:240px 1fr 240px;
+  overflow:hidden;
+}
+
+/* COL IZQUIERDA — STATS */
+.ses-left{
+  border-right:1px solid var(--bord);
+  padding:24px 18px;
+  display:flex;flex-direction:column;gap:20px;
+  background:var(--bg2);overflow-y:auto;
+}
+.stat-big{text-align:center;}
+.stat-big-num{font-family:var(--fc);font-size:44px;font-weight:600;color:var(--ink);line-height:1;letter-spacing:-.02em;}
+.stat-big-lbl{font-family:var(--fm);font-size:9px;color:var(--ink3);letter-spacing:.16em;text-transform:uppercase;margin-top:4px;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.stat-box{background:var(--bg3);border:1px solid var(--bord2);border-radius:10px;padding:12px;text-align:center;}
+.stat-box-n{font-family:var(--fc);font-size:26px;font-weight:600;color:var(--ink);line-height:1;}
+.stat-box-l{font-family:var(--fm);font-size:9px;color:var(--ink3);margin-top:4px;letter-spacing:.06em;text-transform:uppercase;line-height:1.3;}
+.sec-lbl{font-family:var(--fm);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);}
+.qlog{display:flex;flex-direction:column;gap:5px;max-height:200px;overflow-y:auto;}
+.qlog::-webkit-scrollbar{width:2px;}
+.qlog::-webkit-scrollbar-thumb{background:var(--bord);}
+.qi{padding:8px 10px;border-radius:8px;border:1px solid var(--bord2);border-left:2px solid var(--gold);background:var(--bg3);font-family:var(--fb);font-size:12px;line-height:1.5;color:var(--ink3);}
+.qi.active{color:var(--ink2);background:var(--bg2);}
+.qi-n{font-family:var(--fm);font-size:8px;color:var(--ink3);margin-bottom:2px;letter-spacing:.1em;text-transform:uppercase;}
+
+/* COL CENTRAL — AVATAR + CHAT */
+.ses-center{
+  display:flex;flex-direction:column;overflow:hidden;background:var(--bg);
+}
+
+/* STAGE */
+/* ── PROFESOR VIDEO ── */
+.prof-video-wrap{
+  position:relative;
+  display:flex;align-items:flex-end;justify-content:center;
+}
+
+/* Float animation */
+.av-wrap{animation:avFloat 3.8s ease-in-out infinite;}
+@keyframes avFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+
+/* Glow cuando habla */
+.av-talking #prof-video{
+  filter:drop-shadow(0 8px 30px rgba(0,0,0,0.85)) drop-shadow(0 0 28px rgba(184,144,42,0.35)) !important;
+}
+
+/* Nod al terminar */
+@keyframes avNod{0%,100%{transform:rotate(0)}25%{transform:rotate(2.5deg)}75%{transform:rotate(-2deg)}}
+.av-nodding #prof-video{ animation:avNod .65s ease-in-out 2; }
+
+.stage{
+  flex:0 0 320px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  background:linear-gradient(175deg, #1a1814 0%, #0d0c0a 100%);
+}
+.stage-rays{
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:600px;height:320px;
+  background:conic-gradient(from 260deg at 50% 100%,
+    transparent 0deg,rgba(184,144,42,.05) 2deg,transparent 5deg,
+    transparent 9deg,rgba(184,144,42,.07) 11deg,transparent 14deg,
+    transparent 18deg,rgba(184,144,42,.05) 20deg,transparent 23deg,
+    transparent 27deg,rgba(184,144,42,.09) 29deg,transparent 32deg,
+    transparent 37deg,rgba(184,144,42,.04) 39deg,transparent 42deg
+  );
+}
+.stage-halo{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(ellipse,rgba(184,144,42,.13) 0%,rgba(184,144,42,.03) 45%,transparent 70%);bottom:-40px;left:50%;transform:translateX(-50%);}
+.stage-ring{position:absolute;width:300px;height:300px;border-radius:50%;border:1px solid rgba(184,144,42,.12);bottom:-50px;left:50%;transform:translateX(-50%);}
+.stage-ring2{position:absolute;width:340px;height:340px;border-radius:50%;border:1px solid rgba(184,144,42,.06);bottom:-70px;left:50%;transform:translateX(-50%);}
+.stage-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(184,144,42,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(184,144,42,.025) 1px,transparent 1px);background-size:44px 44px;}
+
+.av-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;z-index:2;}
+#asvg{width:180px;height:220px;overflow:visible;filter:drop-shadow(0 10px 40px rgba(0,0,0,.8)) drop-shadow(0 0 30px rgba(184,144,42,.1));}
+.av-name{font-family:var(--fc);font-size:16px;font-weight:600;color:var(--gold2);letter-spacing:.06em;font-style:italic;}
+.av-sub{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.12em;margin-top:-4px;}
+.abars{display:flex;align-items:flex-end;gap:3px;height:14px;margin-top:2px;}
+.abar{width:3px;background:var(--gold2);border-radius:1px;height:3px;opacity:.2;}
+
+/* STATUS */
+.av-status{
+  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:6px;
+  background:rgba(0,0,0,.4);padding:5px 12px;border-radius:20px;backdrop-filter:blur(6px);
+}
+.av-sdot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s;}
+.av-sdot.active{background:var(--grn2);box-shadow:0 0 6px rgba(58,150,96,.5);animation:pdot 2s ease-in-out infinite;}
+.av-sdot.speaking{background:var(--gold2);box-shadow:0 0 6px rgba(212,168,64,.5);animation:pdot .55s ease-in-out infinite;}
+@keyframes pdot{0%,100%{opacity:1}50%{opacity:.2}}
+.av-stxt{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase;}
+
+/* CHAT */
+.chat-area{flex:1;display:flex;flex-direction:column;min-height:0;}
+.chat-top{padding:10px 18px;border-bottom:1px solid var(--bord);font-family:var(--fm);font-size:10px;color:var(--ink3);letter-spacing:.14em;text-transform:uppercase;background:var(--bg2);}
+.chat{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:12px;min-height:0;}
+.chat::-webkit-scrollbar{width:3px;}
+.chat::-webkit-scrollbar-thumb{background:var(--bord);border-radius:2px;}
+.msg{display:flex;gap:9px;max-width:92%;}
+.msg.prof{align-self:flex-start;}
+.msg.alu{align-self:flex-end;flex-direction:row-reverse;}
+.msg-av{width:28px;height:28px;border-radius:7px;border:1px solid var(--bord);background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px;box-shadow:var(--shad);}
+.msg-body{display:flex;flex-direction:column;gap:3px;}
+.mmeta{font-family:var(--fm);font-size:9px;color:var(--ink3);}
+.msg.alu .mmeta{text-align:right;}
+.bub{padding:10px 14px;line-height:1.65;border-radius:10px;font-size:14px;}
+.msg.prof .bub{background:var(--bg2);border:1px solid var(--bord);border-top-left-radius:2px;color:var(--ink);box-shadow:var(--shad);border-left:2px solid var(--gold);}
+.msg.alu .bub{background:var(--ink);color:#fff;border-top-right-radius:2px;}
+.typing{display:none;align-self:flex-start;gap:8px;align-items:center;}
+.typing.show{display:flex;}
+.typing-bub{padding:10px 14px;background:var(--bg2);border:1px solid var(--bord);border-radius:10px;border-top-left-radius:2px;border-left:2px solid var(--gold);display:flex;gap:5px;align-items:center;box-shadow:var(--shad);}
+.td{width:4px;height:4px;background:var(--gold);border-radius:50%;animation:tdot 1.2s ease-in-out infinite;opacity:.4;}
+.td:nth-child(2){animation-delay:.2s}.td:nth-child(3){animation-delay:.4s}
+@keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+.empty-msg{font-family:var(--fb);font-size:14px;color:var(--ink3);text-align:center;padding:24px 0;font-style:italic;}
+
+/* INPUT */
+.input-bar{padding:12px 18px;border-top:1px solid var(--bord);display:flex;gap:7px;align-items:flex-end;background:var(--bg2);}
+.input-wrap{flex:1;}
+.srec{font-family:var(--fm);font-size:9px;padding:2px 8px;border-radius:3px;background:rgba(192,57,43,.08);color:var(--red);border:1px solid rgba(192,57,43,.2);display:none;margin-bottom:3px;letter-spacing:.06em;animation:pdot .8s ease-in-out infinite;}
+.srec.show{display:inline-block;}
+#ui{width:100%;padding:10px 13px;border:1px solid var(--bord);border-radius:8px;font-family:var(--fb);font-size:14px;background:var(--bg3);color:var(--ink);resize:none;outline:none;transition:border-color .15s;min-height:40px;max-height:80px;line-height:1.5;}
+#ui:focus{border-color:var(--gold);}
+#ui:disabled{opacity:.35;cursor:not-allowed;}
+#ui::placeholder{color:var(--ink3);}
+.ibtn{width:38px;height:38px;border-radius:8px;border:1px solid var(--bord);background:var(--bg3);color:var(--ink3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .15s;flex-shrink:0;}
+.ibtn:hover{border-color:var(--gold);color:var(--gold);}
+.ibtn.rec{background:rgba(192,57,43,.08);border-color:var(--red);color:var(--red);}
+.sbtn{width:38px;height:38px;border-radius:8px;border:none;background:var(--ink);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;transition:all .15s;flex-shrink:0;}
+.sbtn:hover{background:#2c2820;transform:scale(1.05);}
+.sbtn:disabled{background:var(--bg5);color:var(--ink3);cursor:not-allowed;transform:none;}
+
+/* COL DERECHA — ACCIONES */
+.ses-right-col{
+  border-left:1px solid var(--bord);
+  padding:24px 18px;
+  display:flex;flex-direction:column;gap:16px;
+  background:var(--bg2);overflow-y:auto;
+}
+.action-btn{
+  width:100%;padding:13px;border-radius:10px;
+  font-family:var(--fc);font-size:16px;font-weight:600;
+  cursor:pointer;transition:all .15s;border:1px solid;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.action-btn.primary{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.12);}
+.action-btn.primary:hover{background:#2c2820;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.16);}
+.action-btn.primary:disabled{background:var(--bg5);color:var(--ink3);border-color:var(--bord);cursor:not-allowed;transform:none;box-shadow:none;}
+.action-btn.secondary{background:var(--bg3);color:var(--ink2);border-color:var(--bord);}
+.action-btn.secondary:hover{background:var(--bg4);}
+.action-btn.gold{background:var(--goldd);color:var(--gold3);border-color:rgba(184,144,42,.3);}
+.action-btn.gold:hover{background:var(--goldb);border-color:var(--gold);}
+.action-btn.danger{background:rgba(192,57,43,.06);color:var(--red);border-color:rgba(192,57,43,.2);}
+.action-btn.danger:hover{background:rgba(192,57,43,.1);}
+.action-btn.exit{background:transparent;color:var(--ink3);border-color:var(--bord2);font-size:13px;}
+.action-btn.exit:hover{background:var(--bg3);color:var(--ink2);}
+.action-btn-note{font-family:var(--fm);font-size:9px;color:var(--ink3);text-align:center;letter-spacing:.04em;margin-top:-8px;}
+
+.prog-wrap{display:none;}
+.prog-head{display:flex;justify-content:space-between;font-family:var(--fm);font-size:10px;color:var(--ink3);margin-bottom:6px;}
+.prog-bg{height:3px;background:var(--bg5);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s;width:0%;}
+.tok{font-family:var(--fm);font-size:9px;color:var(--ink3);text-align:center;opacity:.4;margin-top:auto;}
+
+/* ANIMATIONS */
+@keyframes blink{0%,88%,100%{transform:scaleY(1)}94%{transform:scaleY(0.05)}}
+@keyframes breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.014)}}
+@keyframes nod{0%,100%{transform:rotate(0)}30%{transform:rotate(3.5deg)}70%{transform:rotate(-2.5deg)}}
+@keyframes audiob{0%,100%{height:3px}50%{height:14px}}
+#body-g{animation:breathe 3.4s ease-in-out infinite;transform-origin:90px 210px;}
+#leye,#reye{animation:blink 5s ease-in-out infinite;transform-origin:center;}
+#reye{animation-delay:.1s;}
+.av-nodding #head-g{animation:nod .7s ease-in-out 2;}
+.av-talking .abar{opacity:.8;}
+.av-talking .abar:nth-child(1){animation:audiob .38s ease-in-out infinite;}
+.av-talking .abar:nth-child(2){animation:audiob .38s ease-in-out .08s infinite;}
+.av-talking .abar:nth-child(3){animation:audiob .38s ease-in-out .16s infinite;}
+.av-talking .abar:nth-child(4){animation:audiob .38s ease-in-out .05s infinite;}
+.av-talking .abar:nth-child(5){animation:audiob .38s ease-in-out .12s infinite;}
+
+/* MODAL */
+.modal-ov{position:fixed;inset:0;background:rgba(26,24,20,.55);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.modal-ov.show{opacity:1;pointer-events:all;}
+.modal-box{background:var(--bg2);border:1px solid var(--bord);border-radius:14px;padding:36px 32px;max-width:480px;width:92%;transform:translateY(20px);transition:transform .3s;box-shadow:0 24px 64px rgba(0,0,0,.14);position:relative;overflow:hidden;}
+.modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.modal-ov.show .modal-box{transform:translateY(0);}
+.m-ey{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:18px;}
+.m-nota-row{display:flex;align-items:baseline;gap:10px;margin-bottom:4px;}
+.m-nota{font-family:var(--fc);font-size:88px;font-weight:700;line-height:1;letter-spacing:-.02em;}
+.m-nota.rojo{color:#e53935;}
+.m-nota.naranja{color:#f57c00;}
+.m-nota.amarillo{color:var(--gold);}
+.m-nota.verde{color:var(--grn2);}
+.m-nota-max{font-family:var(--fc);font-size:22px;color:var(--ink3);margin-bottom:6px;}
+.m-cpt{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:18px;}
+.m-div{height:1px;background:var(--bord2);margin:14px 0;}
+.m-fb{font-family:var(--fb);font-size:15px;line-height:1.7;color:var(--ink2);margin-bottom:18px;border-left:2px solid var(--gold);padding-left:13px;}
+.m-desg{display:flex;flex-direction:column;margin-bottom:24px;}
+.m-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bord2);}
+.m-row:last-child{border:none;}
+.m-row span:first-child{font-family:var(--fb);font-size:14px;color:var(--ink3);}
+.m-row span:last-child{font-family:var(--fm);font-size:11px;font-weight:500;color:var(--ink2);}
+.m-btns{display:flex;gap:8px;}
+.mbtn{flex:1;padding:11px;border-radius:8px;font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid;}
+.mbtn.s{background:var(--bg3);color:var(--ink2);border-color:var(--bord);}
+.mbtn.s:hover{background:var(--bg4);}
+.mbtn.p{background:var(--ink);color:#fff;border-color:var(--ink);}
+.mbtn.p:hover{background:#2c2820;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--bord);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     PANTALLA 1 — CONFIGURACIÓN
+══════════════════════════════════════════════════════════ -->
+<div class="screen" id="s-config">
+
+  <div class="cfg-header">
+    <div class="cfg-logo">
+      <div class="cfg-logo-box">L</div>
+      <div class="cfg-logo-text">LEX <em>ORAL</em></div>
+    </div>
+    <div class="cfg-srv">
+      <div class="sdot" id="sdot-cfg"></div>
+      <span id="srv-txt-cfg">Verificando servidor…</span>
+    </div>
+  </div>
+
+  <div class="cfg-hero">
+    <div class="cfg-hero-title">Practica tu prueba oral de Derecho con un<br><em>profesor virtual</em> que se adapta a ti.</div>
+    <div class="cfg-hero-sub">Carga tus apuntes, elige tu evaluador y comienza cuando estés listo.</div>
+  </div>
+
+  <div class="cfg-card">
+
+    <!-- EVALUADORES -->
+    <div>
+      <div class="s-title">Elige tu evaluador</div>
+      <div class="eval-grid">
+        <div class="ec active" data-p="rigorista" onclick="selProf(this)">
+          <div class="ec-icon">⚖️</div>
+          <div class="ec-name">Dr. Rigorista</div>
+          <div class="ec-desc">Evaluación técnica exhaustiva</div>
+          <div class="ec-check">✓</div>
+        </div>
+        <div class="ec" data-p="dialéctico" onclick="selProf(this)">
+          <div class="ec-icon">🔍</div>
+          <div class="ec-name">Prof. Dialéctico</div>
+          <div class="ec-desc">Interrogación por razonamiento</div>
+          <div class="ec-check">✓</div>
+        </div>
+        <div class="ec" data-p="académico" onclick="selProf(this)">
+          <div class="ec-icon">🎓</div>
+          <div class="ec-name">Prof. Académico</div>
+          <div class="ec-desc">Corrección guiada y pedagógica</div>
+          <div class="ec-check">✓</div>
+        </div>
+        <div class="ec" data-p="socrático" onclick="selProf(this)">
+          <div class="ec-icon">📜</div>
+          <div class="ec-name">Prof. Socrático</div>
+          <div class="ec-desc">Mayéutica y descubrimiento</div>
+          <div class="ec-check">✓</div>
+        </div>
+        <div class="ec" data-p="examinador" onclick="selProf(this)">
+          <div class="ec-icon">📋</div>
+          <div class="ec-name">Prof. Examinador</div>
+          <div class="ec-desc">Simulación de examen real</div>
+          <div class="ec-check">✓</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APUNTES -->
+    <div>
+      <div class="s-title">Tus apuntes</div>
+      <div class="apuntes-grid">
+        <div class="upload-box" id="ua" onclick="document.getElementById('fi').click()">
+          <div class="upload-icon">📄</div>
+          <div class="upload-lbl">Seleccionar archivo .txt</div>
+          <div class="upload-fn" id="ufn"></div>
+        </div>
+        <textarea class="apunte-ta" id="mt" placeholder="O pega aquí tus apuntes directamente…" rows="4"></textarea>
+      </div>
+      <input type="file" id="fi" accept=".txt" onchange="handleFile(this)">
+    </div>
+
+    <!-- FORMATO + INTENSIDAD -->
+    <div class="fmt-int-grid">
+      <div>
+        <div class="s-title">Formato de evaluación</div>
+        <div class="pill-row">
+          <div class="pill active" data-m="libre" onclick="selModo(this)">
+            <span class="pill-main">∞ Libre</span>
+            <span class="pill-sub">sin límite</span>
+          </div>
+          <div class="pill" data-m="5" onclick="selModo(this)">
+            <span class="pill-main">5 preguntas</span>
+            <span class="pill-sub">~10 min</span>
+          </div>
+          <div class="pill" data-m="3" onclick="selModo(this)">
+            <span class="pill-main">3 preguntas</span>
+            <span class="pill-sub">~6 min</span>
+          </div>
+          <div class="pill" data-m="10" onclick="selModo(this)">
+            <span class="pill-main">10 preguntas</span>
+            <span class="pill-sub">completo</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="s-title">Intensidad del evaluador</div>
+        <div class="int-wrap">
+          <div class="int-labels"><span>Suave</span><span class="int-val" id="iv">Moderada</span><span>Extrema</span></div>
+          <input type="range" min="1" max="5" value="3" oninput="updInt(this.value)">
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <button class="btn-comenzar" id="btn-cfg" onclick="irASesion()" disabled>
+      Comenzar sesión →
+    </button>
+    <div class="btn-comenzar-note" id="cfg-note">Verificando conexión con el servidor…</div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PANTALLA 2 — SESIÓN
+══════════════════════════════════════════════════════════ -->
+<div class="screen off" id="s-session">
+
+  <!-- TOPBAR -->
+  <div class="ses-bar">
+    <div class="ses-logo" onclick="salirSesion()">LEX <em>ORAL</em></div>
+    <div class="ses-divider"></div>
+    <div class="ses-prof-tag">
+      <span class="ses-prof-icon" id="ses-icon">⚖️</span>
+      <span id="ses-nombre">Dr. Rigorista</span>
+    </div>
+    <div class="ses-right">
+      <div class="ses-badge inactiva" id="ses-badge">Inactiva</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="ses-body">
+
+    <!-- IZQUIERDA: ESTADÍSTICAS -->
+    <div class="ses-left">
+      <div>
+        <div class="sec-lbl" style="margin-bottom:14px;">Estadísticas</div>
+        <div class="stat-big">
+          <div class="stat-big-num" id="tmr">00:00</div>
+          <div class="stat-big-lbl">Duración</div>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-box-n" id="stat-p">0</div>
+          <div class="stat-box-l">Preguntas</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-n" id="stat-prec">—</div>
+          <div class="stat-box-l">Palabras prom.</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-n" id="stat-t">0</div>
+          <div class="stat-box-l">Términos juríd.</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-n" id="stat-seg">—</div>
+          <div class="stat-box-l">Seg. prom. resp.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sec-lbl" style="margin-bottom:10px;">Registro</div>
+        <div class="qlog" id="ql">
+          <div style="font-family:var(--fm);font-size:10px;color:var(--ink3);">Las preguntas aparecerán aquí.</div>
+        </div>
+      </div>
+
+      <div class="prog-wrap" id="prog-wrap">
+        <div class="prog-head"><span>Progreso</span><span id="prog-label">0 / 0</span></div>
+        <div class="prog-bg"><div class="prog-fill" id="prog-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- CENTRO: AVATAR + CHAT -->
+    <div class="ses-center">
+      <div class="stage">
+        <div class="stage-grid"></div>
+        <div class="stage-rays"></div>
+        <div class="stage-halo"></div>
+        <div class="stage-ring"></div>
+        <div class="stage-ring2"></div>
+
+        <!-- PROFESOR PNG + BOCA ANIMADA -->
+      <div class="av-wrap" id="av-wrap">
+        <div class="prof-video-wrap" id="prof-img-wrap">
+          <!-- VIDEO del Profesor Carrasco en loop -->
+          <video
+            id="prof-video"
+            src="/profesor.mp4"
+            loop
+            muted
+            playsinline
+            preload="auto"
+            style="width:220px;height:auto;border-radius:8px;
+                   filter:drop-shadow(0 8px 30px rgba(0,0,0,0.85));
+                   display:block;">
+          </video>
+          <!-- Fallback PNG si no hay video -->
+          <img id="prof-img-fallback"
+               src="/profesor.png"
+               alt="Profesor"
+               style="width:220px;height:auto;display:none;
+                      filter:drop-shadow(0 8px 30px rgba(0,0,0,0.85));">
+        </div>
+        <div class="abars" id="abars">
+          <div class="abar"></div><div class="abar"></div><div class="abar"></div>
+          <div class="abar"></div><div class="abar"></div>
+        </div>
+        <div class="av-name" id="av-name">Dr. Rigorista</div>
+        <div class="av-sub"  id="av-sub">Evaluador técnico exhaustivo</div>
+      </div>div>
+
+        <div class="av-status">
+          <div class="av-sdot" id="av-sdot"></div>
+          <div class="av-stxt" id="av-stxt">INACTIVO</div>
+        </div>
+      </div>
+
+      <div class="chat-area">
+        <div class="chat-top">Conversación</div>
+        <div class="chat" id="chat">
+          <div class="empty-msg" id="empty">El evaluador está listo. Pulsa <strong>Iniciar pregunta</strong> para comenzar.</div>
+          <div class="typing" id="typ">
+            <div class="msg-av" id="typ-av">⚖️</div>
+            <div class="typing-bub"><div class="td"></div><div class="td"></div><div class="td"></div></div>
+          </div>
+        </div>
+        <div class="input-bar">
+          <div class="input-wrap">
+            <div class="srec" id="srec">● REC</div>
+            <textarea id="ui" placeholder="Escribe tu respuesta… (Enter para enviar)" onkeydown="hk(event)" oninput="ar(this)" disabled rows="1"></textarea>
+          </div>
+          <button class="ibtn" id="bm" onclick="togMic()">🎙</button>
+          <button class="sbtn" id="bs" onclick="send()" disabled>↑</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DERECHA: ACCIONES -->
+    <div class="ses-right-col">
+      <div class="sec-lbl" style="margin-bottom:4px;">Acciones</div>
+
+      <button class="action-btn primary" id="btn-iniciar" onclick="iniciar()">
+        ▶ Iniciar pregunta
+      </button>
+
+      <button class="action-btn secondary" onclick="nuevaQ()">
+        ↺ Nueva pregunta
+      </button>
+
+      <button class="action-btn gold" id="btn-nota" onclick="terminarExamen()" style="display:none;">
+        ★ Obtener nota final
+      </button>
+      <div class="action-btn-note" id="nota-note" style="display:none;">Evalúa toda la sesión</div>
+
+      <div style="height:1px;background:var(--bord2);"></div>
+
+      <button class="action-btn exit" onclick="salirSesion()">
+        ← Salir de la sesión
+      </button>
+
+      <div class="prog-wrap" id="prog-wrap">
+        <div class="prog-head"><span>Progreso</span><span id="prog-label">0 / 0</span></div>
+        <div class="prog-bg"><div class="prog-fill" id="prog-fill"></div></div>
+      </div>
+
+      <div class="tok" id="tok"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NOTA -->
+<div class="modal-ov" id="modal">
+  <div class="modal-box">
+    <div class="m-ey">Lex Oral · Resultado de evaluación oral</div>
+    <div class="m-nota-row">
+      <div class="m-nota" id="m-nota">—</div>
+      <div class="m-nota-max">/ 7.0</div>
+    </div>
+    <div class="m-cpt" id="m-cpt">calculando…</div>
+    <div class="m-div"></div>
+    <div class="m-fb" id="m-fb">—</div>
+    <div class="m-desg">
+      <div class="m-row"><span>Preguntas respondidas</span><span id="r-q">—</span></div>
+      <div class="m-row"><span>Palabras promedio</span><span id="r-p">—</span></div>
+      <div class="m-row"><span>Términos jurídicos</span><span id="r-t">—</span></div>
+      <div class="m-row"><span>Duración</span><span id="r-d">—</span></div>
+    </div>
+    <div class="m-btns">
+      <button class="mbtn s" onclick="cerrarModal()">Cerrar</button>
+      <button class="mbtn s" onclick="salirSesion()">← Inicio</button>
+      <button class="mbtn p" onclick="nuevaSesionModal()">↺ Repetir</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const BACKEND = 'http://localhost:3000';
+const INTLABELS = ['','Muy suave','Suave','Moderada','Intensa','Extrema'];
+const TERMINOS = /artículo|ley|código|jurisprudencia|doctrina|tribunal|derecho|norma|contrato|obligación|delito|pena|sentencia|recurso|constitución|decreto|filosofía|lógica|concepto|juicio|raciocinio|silogismo|definición|premisa|inducción|deducción/gi;
+
+const S = {
+  on:false, prof:'rigorista', inten:3, modo:'libre',
+  msgs:[], topic:'', qn:0, pregHechas:0,
+  tim:0, timI:null, rec:null, micOn:false,
+  totalTokens:0,
+  stats:{ palabras:0, respuestas:0, terminos:0, tiempos:[], ultimaQ:0 },
+};
+
+const PF = {
+  rigorista:  { name:'Dr. Rigorista',   sub:'Evaluador técnico exhaustivo',         icon:'⚖️', glasses:true,  browAng:-10, mouth:'neutral',pitch:.88, rate:.88, tieColor:'#8b1a1a',
+    sys:function(t,i,e){return 'Eres el Dr. Rigorista, evaluador riguroso y exigente de pruebas orales de Derecho. No toleras respuestas vagas ni imprecisas. Exiges precision tecnica. Intensidad '+i+'/5.\n'+buildTopicBlock(t)+'\nSolo espanol. Sin listas. Max 3 oraciones. Inicia con UNA pregunta amplia sobre el tema asignado.'+e;}},
+  dialéctico: { name:'Prof. Dialéctico', sub:'Interrogación basada en razonamiento', icon:'🔍', glasses:false, browAng:0,   mouth:'slight', pitch:1.0, rate:.85, tieColor:'#1a3a6a',
+    sys:function(t,i,e){return 'Eres el Prof. Dialectico. Usas la interrogacion dialectica: cada respuesta genera una nueva pregunta que lleva al alumno a razonar. Nunca das la respuesta directa. Intensidad '+i+'/5.\n'+buildTopicBlock(t)+'\nSolo espanol. Sin listas. Max 3 oraciones.'+e;}},
+  académico:  { name:'Prof. Académico',  sub:'Corrección guiada y pedagógica',       icon:'🎓', glasses:false, browAng:7,   mouth:'smile',  pitch:1.08,rate:.98, tieColor:'#1e5a28',
+    sys:function(t,i,e){return 'Eres el Prof. Academico, pedagogico y estructurado. Corriges con detalle, explicas errores y refuerzas conceptos. Intensidad '+i+'/5.\n'+buildTopicBlock(t)+'\nSolo espanol. Sin listas. Max 3 oraciones.'+e;}},
+  socrático:  { name:'Prof. Socrático',  sub:'Mayéutica y descubrimiento',           icon:'📜', glasses:false, browAng:4,   mouth:'slight', pitch:1.04,rate:.87, tieColor:'#5a3a10',
+    sys:function(t,i,e){return 'Eres el Prof. Socratico. Usas la mayeutica: guias al alumno a descubrir la verdad por si mismo mediante preguntas sucesivas. Eres paciente y filosofico. Intensidad '+i+'/5.\n'+buildTopicBlock(t)+'\nSolo espanol. Sin listas. Max 3 oraciones.'+e;}},
+  examinador: { name:'Prof. Examinador', sub:'Simulación de examen real',             icon:'📋', glasses:false, browAng:-5,  mouth:'frown',  pitch:.80, rate:.92, tieColor:'#3a3a3a',
+    sys:function(t,i,e){return 'Eres el Prof. Examinador. Simulas un examen oral real de facultad de Derecho: tono formal, preguntas directas, sin explicaciones extras. El alumno debe responder como en tribunal. Intensidad '+i+'/5.\n'+buildTopicBlock(t)+'\nSolo espanol. Sin listas. Max 2 oraciones por turno.'+e;}},
+};
+
+function extraerTemas(topic) {
+  var lineas = topic.split('\n').map(function(l){return l.trim();}).filter(function(l){return l.length>15;});
+  var temas = [];
+  var pat = /^(clase|unidad|tema|cap[íi]tulo|secci[oó]n|\d+[\.\-\)])/i;
+  lineas.forEach(function(l){
+    if(pat.test(l)||(l===l.toUpperCase()&&l.length>10&&l.length<80)) temas.push(l.substring(0,80));
+  });
+  if(temas.length<3){
+    lineas.forEach(function(l){
+      if(l.length>40&&l.length<100&&temas.length<8){
+        var p=l.split(' ').slice(0,8).join(' ');
+        if(!temas.includes(p)) temas.push(p);
+      }
+    });
+  }
+  return temas.slice(0,10);
+}
+
+function buildTopicBlock(topic) {
+  if(!topic) return 'ATENCION: Sin apuntes. Pide al alumno que cargue material.';
+  var seed = Math.floor(Math.random()*1000);
+  var temas = extraerTemas(topic);
+  var temaInicial = temas.length>0 ? temas[seed%temas.length] : '';
+  var b = '=== APUNTES DEL ALUMNO ===\n'+topic+'\n=== FIN ===\n\n';
+  if(temaInicial) b += 'TEMA OBLIGATORIO: Empieza con una pregunta AMPLIA sobre "'+temaInicial+'". No empieces por otro tema.\n\n';
+  b += 'REGLAS: Solo pregunta sobre temas de los apuntes. NUNCA repitas una pregunta ya hecha. Empieza general, luego profundiza.';
+  return b;
+}
+
+// SERVIDOR
+async function checkServer() {
+  try {
+    var r = await fetch(BACKEND+'/api/health',{signal:AbortSignal.timeout(4000)});
+    var d = await r.json();
+    if(d.ok){
+      document.getElementById('sdot-cfg').className='sdot ok';
+      document.getElementById('srv-txt-cfg').textContent='Servidor conectado';
+      document.getElementById('btn-cfg').disabled=false;
+      document.getElementById('cfg-note').textContent='Todo listo para comenzar';
+    }
+  } catch(e){
+    document.getElementById('sdot-cfg').className='sdot err';
+    document.getElementById('srv-txt-cfg').textContent='Sin conexión — ejecuta node server.js';
+    document.getElementById('cfg-note').textContent='Verifica que el servidor esté corriendo';
+  }
+}
+
+// PANTALLA 1 — SELECCIONES
+function selProf(el) {
+  document.querySelectorAll('.ec').forEach(function(c){c.classList.remove('active');});
+  el.classList.add('active');
+  S.prof = el.dataset.p;
+}
+function selModo(el) {
+  document.querySelectorAll('.pill').forEach(function(c){c.classList.remove('active');});
+  el.classList.add('active');
+  S.modo = el.dataset.m;
+}
+function updInt(v) {
+  S.inten = parseInt(v);
+  document.getElementById('iv').textContent = INTLABELS[v];
+}
+function handleFile(inp) {
+  var f=inp.files[0];if(!f)return;
+  document.getElementById('ufn').textContent='Leyendo…';
+  document.getElementById('ua').classList.add('has');
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    var text=ev.target.result.substring(0,8000);
+    S.topic='[Apuntes: '+f.name+']\n'+text;
+    document.getElementById('ufn').textContent='✓ '+f.name;
+  };
+  reader.readAsText(f);
+}
+
+// TRANSICIÓN A SESIÓN
+function irASesion() {
+  var textArea = document.getElementById('mt').value.trim();
+  if(!S.topic && textArea) S.topic = textArea;
+
+  var p = PF[S.prof];
+  document.getElementById('ses-icon').textContent = p.icon;
+  document.getElementById('ses-nombre').textContent = p.name;
+  document.getElementById('av-name').textContent = p.name;
+  document.getElementById('av-sub').textContent = p.sub;
+  document.getElementById('typ-av').textContent = p.icon;
+  applyAvatar(S.prof);
+
+  document.getElementById('s-config').classList.add('off');
+  document.getElementById('s-session').classList.remove('off');
+}
+
+function salirSesion() {
+  if(S.on && !confirm('¿Salir de la sesión?')) return;
+  resetSesion();
+  document.getElementById('s-session').classList.add('off');
+  document.getElementById('s-config').classList.remove('off');
+  cerrarModal();
+}
+
+function resetSesion() {
+  S.on=false;S.msgs=[];S.qn=0;S.pregHechas=0;S.tim=0;
+  S.stats={palabras:0,respuestas:0,terminos:0,tiempos:[],ultimaQ:0};
+  clearInterval(S.timI);
+  if(S.rec)S.rec.stop();
+  document.getElementById('ui').disabled=true;
+  document.getElementById('bs').disabled=true;
+  document.getElementById('btn-nota').style.display='none';
+  document.getElementById('nota-note').style.display='none';
+  document.getElementById('prog-wrap').style.display='none';
+  document.getElementById('ses-badge').className='ses-badge inactiva';
+  document.getElementById('ses-badge').textContent='Inactiva';
+  document.getElementById('tmr').textContent='00:00';
+  setSt('','INACTIVO');
+  actualizarStatsUI();
+  var c=document.getElementById('chat');
+  c.innerHTML='<div class="empty-msg" id="empty">El evaluador está listo. Pulsa <strong>Iniciar pregunta</strong> para comenzar.</div><div class="typing" id="typ"><div class="msg-av" id="typ-av">'+PF[S.prof].icon+'</div><div class="typing-bub"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>';
+  document.getElementById('ql').innerHTML='<div style="font-family:var(--fm);font-size:10px;color:var(--ink3);">Las preguntas aparecerán aquí.</div>';
+  document.getElementById('btn-iniciar').textContent='▶ Iniciar pregunta';
+}
+
+// AVATAR
+function applyAvatar(k) {
+  // Avatar es ahora PNG — solo actualizamos nombre y subtítulo
+  var p = PF[k];
+  var nameEl = document.getElementById('av-name');
+  var subEl  = document.getElementById('av-sub');
+  if(nameEl) nameEl.textContent = p.name;
+  if(subEl)  subEl.textContent  = p.sub;
+}
+
+// SESIÓN
+async function iniciar() {
+  S.on=true;S.pregHechas=0;
+  S.stats={palabras:0,respuestas:0,terminos:0,tiempos:[],ultimaQ:Date.now()};
+  var empty=document.getElementById('empty');
+  if(empty)empty.style.display='none';
+  document.getElementById('ses-badge').className='ses-badge activa';
+  document.getElementById('ses-badge').textContent='Activa';
+  document.getElementById('ui').disabled=false;
+  document.getElementById('bs').disabled=false;
+  document.getElementById('btn-nota').style.display='block';
+  document.getElementById('nota-note').style.display='block';
+  document.getElementById('btn-iniciar').textContent='▶ Ya iniciada';
+  document.getElementById('btn-iniciar').disabled=true;
+  if(S.modo!=='libre'){document.getElementById('prog-wrap').style.display='block';actualizarProgreso();}
+  startTmr();
+  await askFirst();
+}
+
+async function nuevaQ() {
+  if(!S.on) return iniciar();
+  S.msgs=[];S.qn=0;S.pregHechas=0;
+  S.stats={palabras:0,respuestas:0,terminos:0,tiempos:[],ultimaQ:Date.now()};
+  var c=document.getElementById('chat');
+  c.innerHTML='<div class="typing" id="typ"><div class="msg-av">'+PF[S.prof].icon+'</div><div class="typing-bub"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>';
+  document.getElementById('ql').innerHTML='<div style="font-family:var(--fm);font-size:10px;color:var(--ink3);">Las preguntas aparecerán aquí.</div>';
+  actualizarStatsUI();
+  if(S.modo!=='libre')actualizarProgreso();
+  await askFirst();
+}
+
+function actualizarProgreso() {
+  if(S.modo==='libre')return;
+  var lim=parseInt(S.modo);
+  document.getElementById('prog-fill').style.width=Math.min(100,(S.pregHechas/lim)*100)+'%';
+  document.getElementById('prog-label').textContent=S.pregHechas+' / '+lim;
+}
+
+async function askFirst() {
+  S.stats.ultimaQ=Date.now();
+  setSt('speaking','PENSANDO'); showTyp(true);
+  try {
+    var res=await apiChat([{role:'user',content:'Comienza la prueba oral.'}]);
+    showTyp(false);addMsg('prof',res);logQ(res);doSpeak(res);
+    S.msgs.push({role:'assistant',content:res});
+    S.pregHechas=1;actualizarProgreso();
+  } catch(e){showTyp(false);addMsg('prof','Error: '+e.message);setSt('','ERROR');}
+}
+
+async function send() {
+  var inp=document.getElementById('ui');
+  var text=inp.value.trim();
+  if(!text||!S.on)return;
+  inp.value='';ar(inp);
+  var ahora=Date.now();
+  if(S.stats.ultimaQ) S.stats.tiempos.push((ahora-S.stats.ultimaQ)/1000);
+  addMsg('alu',text);
+  S.msgs.push({role:'user',content:text});
+  actualizarStatsRespuesta(text);
+  setSt('speaking','PENSANDO');showTyp(true);
+  try {
+    var res=await apiChat(S.msgs);
+    showTyp(false);addMsg('prof',res);
+    S.msgs.push({role:'assistant',content:res});
+    doSpeak(res);S.pregHechas++;actualizarProgreso();
+    S.stats.ultimaQ=Date.now();
+    if(S.qn%2===1) logQ(res);
+    if(S.modo!=='libre'&&S.pregHechas>=parseInt(S.modo)){setTimeout(pedirNota,800);return;}
+  } catch(e){showTyp(false);addMsg('prof','Error: '+e.message);}
+  setSt('active','ACTIVO');
+}
+
+async function apiChat(messages) {
+  var topic=S.topic||'';
+  var sysPrompt=PF[S.prof].sys(topic.substring(0,8000),S.inten,'');
+  var r=await fetch(BACKEND+'/api/chat',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({messages:messages,prof:S.prof,intensity:S.inten,topic:topic.substring(0,8000),emotion:'',_system:sysPrompt}),
+  });
+  var d=await r.json();
+  if(!r.ok)throw new Error(d.error||'Error');
+  if(d.input_tokens||d.output_tokens){
+    S.totalTokens+=(d.input_tokens||0)+(d.output_tokens||0);
+    document.getElementById('tok').textContent=S.totalTokens.toLocaleString()+' tokens';
+  }
+  return d.reply;
+}
+
+// STATS
+function actualizarStatsRespuesta(text) {
+  var p=text.trim().split(/\s+/).length;
+  var t=(text.match(TERMINOS)||[]).length;
+  S.stats.palabras+=p;S.stats.respuestas++;S.stats.terminos+=t;
+  actualizarStatsUI();
+}
+function actualizarStatsUI() {
+  document.getElementById('stat-p').textContent=S.stats.respuestas;
+  var prom=S.stats.respuestas>0?Math.round(S.stats.palabras/S.stats.respuestas):0;
+  document.getElementById('stat-prec').textContent=prom>0?prom:'—';
+  document.getElementById('stat-t').textContent=S.stats.terminos;
+  var seg=S.stats.tiempos.length>0?Math.round(S.stats.tiempos.reduce(function(a,b){return a+b;},0)/S.stats.tiempos.length)+'s':'—';
+  document.getElementById('stat-seg').textContent=seg;
+}
+
+// CALIFICACIÓN
+async function terminarExamen() {
+  if(!S.msgs.length){alert('Responde al menos una pregunta primero.');return;}
+  await pedirNota();
+}
+async function pedirNota() {
+  S.on=false;
+  document.getElementById('ui').disabled=true;document.getElementById('bs').disabled=true;
+  setSt('speaking','EVALUANDO');
+  var resumen=S.msgs.map(function(m){return(m.role==='assistant'?'EVALUADOR: ':'ALUMNO: ')+m.content;}).join('\n\n');
+  var prompt='Eres un evaluador de pruebas orales de Derecho en Chile.\n'
+    +'Nota en escala chilena 1.0-7.0: 1.0-3.9 Reprobado | 4.0 Minimo | 4.0-5.5 Aprobado | 5.5-6.5 Bueno | 6.5-7.0 Excelente\n'
+    +'Se realista. Respuestas parciales no superan 5.0.\n\nSESION:\n'+resumen+'\n\n'
+    +'Responde SOLO con JSON sin markdown:\n'
+    +'{"nota":5.2,"concepto":"Bueno","feedback":"2-3 oraciones de feedback constructivo."}';
+  try {
+    var r=await fetch(BACKEND+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:prompt}],prof:S.prof,intensity:S.inten,topic:''})});
+    var d=await r.json();
+    mostrarNota(JSON.parse(d.reply.replace(/```json|```/g,'').trim()));
+  } catch(e){mostrarNota({nota:4.0,concepto:'Sin calificar',feedback:'No se pudo calcular la nota.'});}
+  setSt('','FINALIZADO');
+}
+function mostrarNota(ev) {
+  var nota=parseFloat(ev.nota)||1;
+  var el=document.getElementById('m-nota');
+  el.textContent=nota.toFixed(1);
+  el.className='m-nota '+(nota>=6?'verde':nota>=4.5?'amarillo':nota>=3?'naranja':'rojo');
+  document.getElementById('m-cpt').textContent=(ev.concepto||'')+'  ·  Escala chilena 1.0 – 7.0';
+  document.getElementById('m-fb').textContent=ev.feedback||'';
+  var m=String(Math.floor(S.tim/60)).padStart(2,'0'),s=String(S.tim%60).padStart(2,'0');
+  var prom=S.stats.respuestas>0?Math.round(S.stats.palabras/S.stats.respuestas):0;
+  document.getElementById('r-q').textContent=S.pregHechas+' respondidas';
+  document.getElementById('r-p').textContent=prom+' palabras';
+  document.getElementById('r-t').textContent=S.stats.terminos+' detectados';
+  document.getElementById('r-d').textContent=m+':'+s;
+  document.getElementById('modal').classList.add('show');
+}
+function cerrarModal(){document.getElementById('modal').classList.remove('show');}
+function nuevaSesionModal(){cerrarModal();nuevaQ();}
+
+// AVATAR SPEAK
+// ── ANIMACIÓN DE BOCA ──────────────────────────────────────
+var _mouthInterval = null;
+
+function startMouth() { /* no-op: video reemplaza animación de boca */ }
+
+
+function stopMouth() { /* no-op */ }
+
+
+function startAbars() {
+  var bars = document.querySelectorAll('#abars .abar');
+  var maxH = [10,16,14,20,10];
+  _abarsInterval = setInterval(function(){
+    bars.forEach(function(b,i){
+      var h = 2 + Math.random()*maxH[i];
+      b.style.height  = h+'px';
+      b.style.opacity = String(0.6 + Math.random()*0.4);
+      b.style.transition = 'height .08s ease';
+    });
+  }, 90);
+}
+var _abarsInterval = null;
+function stopAbars() {
+  clearInterval(_abarsInterval);
+  document.querySelectorAll('#abars .abar').forEach(function(b){
+    b.style.height='2px'; b.style.opacity='0.2'; b.style.transition='height .3s ease';
+  });
+}
+
+function doSpeak(text) {
+  var wrap  = document.getElementById('av-wrap');
+  var video = document.getElementById('prof-video');
+
+  wrap.classList.add('av-talking');
+  setSt('speaking','HABLANDO');
+  startAbars();
+
+  // Reproducir video (sin sonido — el TTS pone el audio)
+  if(video) {
+    video.muted = true;
+    video.play().catch(function(){});
+  }
+
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang  = 'es-ES';
+    u.rate  = PF[S.prof].rate;
+    u.pitch = PF[S.prof].pitch;
+    var vs = window.speechSynthesis.getVoices();
+    var ev = vs.find(function(v){ return v.lang.startsWith('es'); });
+    if(ev) u.voice = ev;
+    u.onend = function(){ stopSpeak(); };
+    window.speechSynthesis.speak(u);
+  } else {
+    setTimeout(stopSpeak, 3200);
+  }
+}
+
+function stopSpeak() {
+  var wrap  = document.getElementById('av-wrap');
+  var video = document.getElementById('prof-video');
+
+  wrap.classList.remove('av-talking');
+  stopAbars();
+  setSt('active','ACTIVO');
+
+  // Pausar video cuando termina de hablar
+  if(video) {
+    video.pause();
+    video.currentTime = 0;
+  }
+
+  if(Math.random() > .4){
+    wrap.classList.add('av-nodding');
+    setTimeout(function(){ wrap.classList.remove('av-nodding'); }, 1300);
+  }
+}
+
+// CHAT UI
+function addMsg(role,text) {
+  var c=document.getElementById('chat'),t=document.getElementById('typ');
+  var d=document.createElement('div');
+  d.className='msg '+(role==='prof'?'prof':'alu');
+  var tm=new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
+  var icon=role==='prof'?PF[S.prof].icon:'👤';
+  var nm=role==='prof'?PF[S.prof].name:'Alumno';
+  d.innerHTML='<div class="msg-av">'+icon+'</div><div class="msg-body"><div class="mmeta">'+nm+' &middot; '+tm+'</div><div class="bub">'+text.replace(/\n/g,'<br>')+'</div></div>';
+  c.insertBefore(d,t);c.scrollTop=99999;
+}
+function showTyp(v){document.getElementById('typ').style.display=v?'flex':'none';if(v)document.getElementById('chat').scrollTop=99999;}
+function logQ(text) {
+  S.qn++;
+  var ql=document.getElementById('ql');
+  if(S.qn===1)ql.innerHTML='';
+  ql.querySelectorAll('.qi').forEach(function(q){q.classList.remove('active');});
+  var d=document.createElement('div');d.className='qi active';
+  d.innerHTML='<div class="qi-n">Pregunta '+S.qn+'</div>'+(text.length>80?text.substring(0,80)+'…':text);
+  ql.appendChild(d);
+}
+
+// TIMER
+function startTmr() {
+  clearInterval(S.timI);S.tim=0;
+  S.timI=setInterval(function(){
+    S.tim++;
+    document.getElementById('tmr').textContent=String(Math.floor(S.tim/60)).padStart(2,'0')+':'+String(S.tim%60).padStart(2,'0');
+  },1000);
+}
+
+// STATUS
+function setSt(t,txt) {
+  var d=document.getElementById('av-sdot');
+  d.className='av-sdot'+(t?' '+t:'');
+  document.getElementById('av-stxt').textContent=txt;
+}
+
+// MIC
+function togMic() {
+  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){alert('Usa Chrome para el micrófono.');return;}
+  if(S.micOn){if(S.rec)S.rec.stop();S.micOn=false;document.getElementById('bm').classList.remove('rec');document.getElementById('srec').classList.remove('show');return;}
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  S.rec=new SR();S.rec.lang='es-CL';S.rec.continuous=true;S.rec.interimResults=true;
+  S.rec.onresult=function(e){var t='';for(var i=e.resultIndex;i<e.results.length;i++)t+=e.results[i][0].transcript;document.getElementById('ui').value=t;ar(document.getElementById('ui'));};
+  S.rec.onend=function(){S.micOn=false;document.getElementById('bm').classList.remove('rec');document.getElementById('srec').classList.remove('show');};
+  S.rec.start();S.micOn=true;document.getElementById('bm').classList.add('rec');document.getElementById('srec').classList.add('show');
+}
+
+function hk(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
+function ar(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
+
+if('speechSynthesis' in window)window.speechSynthesis.onvoiceschanged=function(){window.speechSynthesis.getVoices();};
+checkServer();
+</script>
+</body>
+</html>

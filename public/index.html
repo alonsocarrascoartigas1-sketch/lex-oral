@@ -247,22 +247,50 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
   display:flex;align-items:flex-end;justify-content:center;
 }
 
-/* Float animation */
-.av-wrap{animation:avFloat 3.8s ease-in-out infinite;}
-@keyframes avFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+/* AV WRAP ocupa todo el stage */
+.av-wrap{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  animation:avFloat 4s ease-in-out infinite;
+}
+@keyframes avFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+
+/* Video ocupa todo el ancho del stage */
+.prof-video-wrap{
+  position:absolute;top:0;left:0;right:0;bottom:60px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+#prof-video{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center top;
+  filter:drop-shadow(0 0 0 transparent);
+  transition:filter .3s;
+}
+#prof-img-fallback{
+  width:100%;height:100%;object-fit:cover;object-position:center top;
+}
 
 /* Glow cuando habla */
+.av-talking .prof-video-wrap{
+  box-shadow:inset 0 0 40px rgba(184,144,42,0.2);
+}
 .av-talking #prof-video{
-  filter:drop-shadow(0 8px 30px rgba(0,0,0,0.85)) drop-shadow(0 0 28px rgba(184,144,42,0.35)) !important;
+  filter:brightness(1.05) saturate(1.1);
 }
 
 /* Nod al terminar */
-@keyframes avNod{0%,100%{transform:rotate(0)}25%{transform:rotate(2.5deg)}75%{transform:rotate(-2deg)}}
+@keyframes avNod{0%,100%{transform:rotate(0)}25%{transform:rotate(2deg)}75%{transform:rotate(-1.5deg)}}
 .av-nodding #prof-video{ animation:avNod .65s ease-in-out 2; }
 
+/* Info nombre al fondo del stage */
+.av-wrap .abars{ position:relative;z-index:3;margin-bottom:4px; }
+.av-wrap .av-name{ position:relative;z-index:3; }
+.av-wrap .av-sub{ position:relative;z-index:3; }
+
 .stage{
-  flex:0 0 320px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  flex:0 0 340px;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
   position:relative;overflow:hidden;
   background:linear-gradient(175deg, #1a1814 0%, #0d0c0a 100%);
 }
@@ -618,17 +646,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
             loop
             muted
             playsinline
-            preload="auto"
-            style="width:220px;height:auto;border-radius:8px;
-                   filter:drop-shadow(0 8px 30px rgba(0,0,0,0.85));
-                   display:block;">
+            preload="auto">
           </video>
-          <!-- Fallback PNG si no hay video -->
           <img id="prof-img-fallback"
                src="/profesor.png"
                alt="Profesor"
-               style="width:220px;height:auto;display:none;
-                      filter:drop-shadow(0 8px 30px rgba(0,0,0,0.85));">
+               style="display:none;">
         </div>
         <div class="abars" id="abars">
           <div class="abar"></div><div class="abar"></div><div class="abar"></div>
@@ -638,7 +661,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
         <div class="av-sub"  id="av-sub">Evaluador técnico exhaustivo</div>
       </div>div>
 
-        <div class="av-status">
+        <div class="av-status" style="z-index:4;">
           <div class="av-sdot" id="av-sdot"></div>
           <div class="av-stxt" id="av-stxt">INACTIVO</div>
         </div>
@@ -723,7 +746,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 </div>
 
 <script>
-const BACKEND = '';
+const BACKEND = 'http://localhost:3000';
 const INTLABELS = ['','Muy suave','Suave','Moderada','Intensa','Extrema'];
 const TERMINOS = /artículo|ley|código|jurisprudencia|doctrina|tribunal|derecho|norma|contrato|obligación|delito|pena|sentencia|recurso|constitución|decreto|filosofía|lógica|concepto|juicio|raciocinio|silogismo|definición|premisa|inducción|deducción/gi;
 
@@ -842,6 +865,10 @@ function irASesion() {
 
 function salirSesion() {
   if(S.on && !confirm('¿Salir de la sesión?')) return;
+  // Detener voz al salir
+  if('speechSynthesis' in window) window.speechSynthesis.cancel();
+  var video = document.getElementById('prof-video');
+  if(video){ video.pause(); video.currentTime=0; }
   resetSesion();
   document.getElementById('s-session').classList.add('off');
   document.getElementById('s-config').classList.remove('off');
@@ -986,10 +1013,24 @@ function actualizarStatsUI() {
 // CALIFICACIÓN
 async function terminarExamen() {
   if(!S.msgs.length){alert('Responde al menos una pregunta primero.');return;}
+  // Detener voz inmediatamente
+  if('speechSynthesis' in window) window.speechSynthesis.cancel();
+  stopAbars();
+  var wrap = document.getElementById('av-wrap');
+  if(wrap) wrap.classList.remove('av-talking');
+  var video = document.getElementById('prof-video');
+  if(video){ video.pause(); video.currentTime=0; }
   await pedirNota();
 }
 async function pedirNota() {
   S.on=false;
+  // Detener cualquier voz activa
+  if('speechSynthesis' in window) window.speechSynthesis.cancel();
+  stopAbars();
+  var wrap = document.getElementById('av-wrap');
+  if(wrap) wrap.classList.remove('av-talking');
+  var video = document.getElementById('prof-video');
+  if(video){ video.pause(); video.currentTime=0; }
   document.getElementById('ui').disabled=true;document.getElementById('bs').disabled=true;
   setSt('speaking','EVALUANDO');
   var resumen=S.msgs.map(function(m){return(m.role==='assistant'?'EVALUADOR: ':'ALUMNO: ')+m.content;}).join('\n\n');

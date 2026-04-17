@@ -251,33 +251,28 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .av-wrap{
   position:absolute;inset:0;
   display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-  animation:avFloat 4s ease-in-out infinite;
+  padding-bottom:10px;
+  z-index:2;
 }
 @keyframes avFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
 
 /* Video llena todo el stage */
 .prof-video-wrap{
-  position:absolute;top:0;left:0;right:0;bottom:55px;
+  position:absolute;inset:0;
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
+  background:#0a0906;
 }
 #prof-video{
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:auto;height:auto;
-  min-width:100%;min-height:100%;
-  max-width:none;
+  width:100%;height:100%;
   object-fit:cover;
+  object-position:center 30%;
   transition:filter .3s;
 }
 #prof-img-fallback{
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:auto;height:auto;
-  min-width:100%;min-height:100%;
+  width:100%;height:100%;
   object-fit:cover;
+  object-position:center 30%;
 }
 
 /* Glow cuando habla */
@@ -298,10 +293,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .av-wrap .av-sub{ position:relative;z-index:3; }
 
 .stage{
-  flex:0 0 340px;
+  flex:0 0 320px;
   display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
   position:relative;overflow:hidden;
-  background:linear-gradient(175deg, #1a1814 0%, #0d0c0a 100%);
+  background:#0a0906;
 }
 .stage-rays{
   position:absolute;bottom:0;left:50%;transform:translateX(-50%);

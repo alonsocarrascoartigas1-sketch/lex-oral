@@ -98,6 +98,39 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .hist-link{font-family:var(--fm);font-size:10px;color:var(--gold);cursor:pointer;letter-spacing:.06em;padding:4px 10px;border:1px solid rgba(184,144,42,.3);border-radius:5px;background:var(--goldd);}
 .hist-link:hover{background:var(--goldb);}
 
+/* AVISO APUNTES */
+.apuntes-required{display:none;font-family:var(--fm);font-size:10px;color:var(--red);background:rgba(192,57,43,.06);border:1px solid rgba(192,57,43,.2);border-radius:6px;padding:8px 12px;letter-spacing:.04em;margin-top:-16px;}
+.apuntes-required.show{display:block;}
+
+/* WEBCAM */
+.webcam-wrap{
+  position:fixed;bottom:20px;right:20px;
+  width:200px;height:150px;
+  border-radius:12px;overflow:hidden;
+  border:2px solid rgba(184,144,42,.4);
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+  background:#000;
+  z-index:50;
+  display:none;
+  transition:all .3s;
+}
+.webcam-wrap.show{display:block;}
+.webcam-wrap video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);}
+.webcam-close{
+  position:absolute;top:6px;right:6px;
+  width:22px;height:22px;border-radius:50%;
+  background:rgba(0,0,0,.5);color:#fff;
+  border:none;cursor:pointer;font-size:11px;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);
+}
+.webcam-close:hover{background:rgba(192,57,43,.7);}
+.webcam-label{
+  position:absolute;bottom:6px;left:8px;
+  font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.5);
+  letter-spacing:.08em;text-transform:uppercase;
+}
+
 /* ══ SESIÓN ══ */
 #s-session{display:flex;flex-direction:column;height:100vh;}
 .ses-bar{height:52px;flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--bord);display:flex;align-items:center;padding:0 28px;gap:16px;box-shadow:var(--shad);}
@@ -375,6 +408,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
     </div>
     <button class="btn-comenzar" id="btn-cfg" onclick="irASesion()" disabled>Comenzar sesión →</button>
     <div class="btn-comenzar-note" id="cfg-note">Verificando conexión con el servidor…</div>
+    <div class="apuntes-required" id="apuntes-warn">⚠ Debes cargar o pegar tus apuntes antes de comenzar</div>
   </div>
 </div>
 
@@ -490,6 +524,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
       <button class="action-btn teal" id="btn-grab" onclick="toggleGrabacion()">⏺ Grabar sesión</button>
       <div class="action-btn-note" id="grab-note">Guarda el transcript al terminar</div>
 
+      <button class="action-btn secondary" id="btn-webcam" onclick="toggleWebcam()">📷 Activar cámara</button>
+      <div class="action-btn-note">Opcional — te ves a ti mismo</div>
+
       <button class="action-btn secondary" onclick="descargarTranscript()" id="btn-dl-transcript" style="display:none;">⬇ Descargar transcript</button>
 
       <div style="height:1px;background:var(--bord2);"></div>
@@ -504,6 +541,13 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
       <div class="tok" id="tok"></div>
     </div>
   </div>
+</div>
+
+<!-- WEBCAM FLOTANTE -->
+<div class="webcam-wrap" id="webcam-wrap">
+  <video id="webcam-video" autoplay playsinline muted></video>
+  <button class="webcam-close" onclick="toggleWebcam()" title="Cerrar cámara">✕</button>
+  <div class="webcam-label">📷 Tú</div>
 </div>
 
 <!-- MODAL NOTA FINAL -->
@@ -596,20 +640,34 @@ function initVideo() {
 }
 
 // ── SERVER CHECK ───────────────────────────────────────────────────────────
+var _srvOk = false;
 async function checkServer() {
   try {
     var r = await fetch(BACKEND+'/api/health',{signal:AbortSignal.timeout(4000)});
     var d = await r.json();
     if(d.ok){
+      _srvOk = true;
       document.getElementById('sdot-cfg').className='sdot ok';
       document.getElementById('srv-txt-cfg').textContent='Servidor conectado';
-      document.getElementById('btn-cfg').disabled=false;
-      document.getElementById('cfg-note').textContent='Todo listo para comenzar';
+      document.getElementById('cfg-note').textContent='Carga tus apuntes para comenzar';
+      checkApuntes();
     }
   } catch(e){
     document.getElementById('sdot-cfg').className='sdot err';
     document.getElementById('srv-txt-cfg').textContent='Sin conexión — ejecuta node server.js';
     document.getElementById('cfg-note').textContent='Verifica que el servidor esté corriendo';
+  }
+}
+
+function checkApuntes() {
+  var textArea = document.getElementById('mt').value.trim();
+  var tieneApuntes = S.topic.length > 0 || textArea.length > 10;
+  var btn = document.getElementById('btn-cfg');
+  var warn = document.getElementById('apuntes-warn');
+  if(_srvOk) {
+    btn.disabled = !tieneApuntes;
+    warn.classList.toggle('show', !tieneApuntes);
+    document.getElementById('cfg-note').textContent = tieneApuntes ? 'Todo listo — puedes comenzar ✓' : 'Carga tus apuntes para comenzar';
   }
 }
 
@@ -636,6 +694,7 @@ function handleFile(inp) {
   reader.onload=function(ev){
     S.topic='[Apuntes: '+f.name+']\n'+ev.target.result.substring(0,8000);
     document.getElementById('ufn').textContent='✓ '+f.name;
+    checkApuntes();
   };
   reader.readAsText(f);
 }
@@ -661,6 +720,8 @@ function salirSesion() {
   var video = document.getElementById('prof-video');
   if(video){ video.pause(); video.currentTime=0; }
   if(S.grabando) detenerGrabacion();
+  // Apagar webcam si está activa
+  if(_webcamStream){ _webcamStream.getTracks().forEach(function(t){t.stop();}); _webcamStream=null; document.getElementById('webcam-video').srcObject=null; document.getElementById('webcam-wrap').classList.remove('show'); }
   resetSesion();
   document.getElementById('s-session').classList.add('off');
   document.getElementById('s-config').classList.remove('off');
@@ -1192,9 +1253,39 @@ function togMic() {
   document.getElementById('srec').classList.add('show');
 }
 
+// ── WEBCAM ─────────────────────────────────────────────────────────────────
+var _webcamStream = null;
+async function toggleWebcam() {
+  var wrap  = document.getElementById('webcam-wrap');
+  var video = document.getElementById('webcam-video');
+  var btn   = document.getElementById('btn-webcam');
+  if(_webcamStream) {
+    // Apagar
+    _webcamStream.getTracks().forEach(function(t){t.stop();});
+    _webcamStream = null;
+    video.srcObject = null;
+    wrap.classList.remove('show');
+    if(btn) { btn.textContent='📷 Activar cámara'; btn.className='action-btn secondary'; }
+  } else {
+    // Encender
+    try {
+      _webcamStream = await navigator.mediaDevices.getUserMedia({video:true, audio:false});
+      video.srcObject = _webcamStream;
+      wrap.classList.add('show');
+      if(btn) { btn.textContent='📷 Apagar cámara'; btn.className='action-btn teal'; }
+    } catch(e) {
+      alert('No se pudo acceder a la cámara. Verifica los permisos del navegador.');
+    }
+  }
+}
+
 function hk(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
 function ar(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
 if('speechSynthesis' in window) window.speechSynthesis.onvoiceschanged=function(){window.speechSynthesis.getVoices();};
+
+// Listener textarea apuntes
+document.getElementById('mt').addEventListener('input', checkApuntes);
+
 checkServer();
 </script>
 </body>

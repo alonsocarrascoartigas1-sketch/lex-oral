@@ -384,7 +384,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
           <div class="upload-lbl">Seleccionar archivo .txt</div>
           <div class="upload-fn" id="ufn"></div>
         </div>
-        <textarea class="apunte-ta" id="mt" placeholder="O pega aquí tus apuntes directamente…" rows="4"></textarea>
+        <textarea class="apunte-ta" id="mt" placeholder="O pega aquí tus apuntes directamente…" rows="4" oninput="checkApuntes()"></textarea>
       </div>
       <input type="file" id="fi" accept=".txt" onchange="handleFile(this)">
     </div>
@@ -661,7 +661,7 @@ async function checkServer() {
 
 function checkApuntes() {
   var textArea = document.getElementById('mt').value.trim();
-  var tieneApuntes = S.topic.length > 0 || textArea.length > 10;
+  var tieneApuntes = S.topic.length > 0 || textArea.length > 0;
   var btn = document.getElementById('btn-cfg');
   var warn = document.getElementById('apuntes-warn');
   if(_srvOk) {
@@ -703,6 +703,7 @@ function handleFile(inp) {
 function irASesion() {
   var textArea = document.getElementById('mt').value.trim();
   if(!S.topic && textArea) S.topic = textArea;
+  if(!S.topic) { checkApuntes(); return; } // doble seguridad
   var p = PF[S.prof];
   document.getElementById('ses-icon').textContent = p.icon;
   document.getElementById('ses-nombre').textContent = p.name;

@@ -35,191 +35,90 @@
 html,body{height:100%;}
 body{font-family:var(--fb);background:var(--bg);color:var(--ink);}
 
-/* ══════════════════════════════════════════════════════════
-   SCREEN SISTEMA
-══════════════════════════════════════════════════════════ */
 .screen{display:flex;flex-direction:column;width:100%;min-height:100vh;}
 .screen.off{display:none !important;}
 #s-session{height:100vh;overflow:hidden;}
 
-/* ══════════════════════════════════════════════════════════
-   PANTALLA 1 — CONFIGURACIÓN
-══════════════════════════════════════════════════════════ */
-#s-config{
-  display:flex;flex-direction:column;align-items:center;
-  min-height:100vh;padding:32px 24px 40px;
-}
-
-/* HEADER */
-.cfg-header{
-  width:100%;max-width:860px;
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:32px;
-}
+/* ══ CONFIG ══ */
+#s-config{display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 24px 40px;}
+.cfg-header{width:100%;max-width:860px;display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;}
 .cfg-logo{display:flex;align-items:center;gap:10px;}
-.cfg-logo-box{
-  width:34px;height:34px;border-radius:8px;
-  background:var(--ink);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--fc);font-size:18px;font-weight:700;color:var(--gold2);
-}
+.cfg-logo-box{width:34px;height:34px;border-radius:8px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--fc);font-size:18px;font-weight:700;color:var(--gold2);}
 .cfg-logo-text{font-family:var(--fc);font-size:20px;font-weight:600;letter-spacing:.06em;color:var(--ink);}
 .cfg-logo-text em{color:var(--gold);font-style:normal;}
 .cfg-srv{display:flex;align-items:center;gap:6px;font-family:var(--fm);font-size:10px;color:var(--ink3);letter-spacing:.05em;}
 .sdot{width:6px;height:6px;border-radius:50%;background:var(--ink3);}
 .sdot.ok{background:var(--grn2);box-shadow:0 0 6px rgba(58,150,96,.4);}
 .sdot.err{background:var(--red);}
-
-/* HERO */
-.cfg-hero{
-  width:100%;max-width:860px;
-  text-align:center;margin-bottom:36px;
-}
-.cfg-hero-title{
-  font-family:var(--fc);font-size:36px;font-weight:500;
-  line-height:1.2;color:var(--ink);letter-spacing:-.01em;
-  margin-bottom:10px;
-}
+.cfg-hero{width:100%;max-width:860px;text-align:center;margin-bottom:36px;}
+.cfg-hero-title{font-family:var(--fc);font-size:36px;font-weight:500;line-height:1.2;color:var(--ink);letter-spacing:-.01em;margin-bottom:10px;}
 .cfg-hero-title em{color:var(--gold);font-style:italic;}
 .cfg-hero-sub{font-family:var(--fb);font-size:15px;color:var(--ink3);line-height:1.6;}
-
-/* CARD CONTENEDOR */
-.cfg-card{
-  width:100%;max-width:860px;
-  background:var(--bg2);border:1px solid var(--bord);border-radius:16px;
-  padding:32px;display:flex;flex-direction:column;gap:28px;
-  box-shadow:var(--shad2);
-}
-
-/* SECTION TITLE */
-.s-title{
-  font-family:var(--fm);font-size:10px;font-weight:500;
-  letter-spacing:.16em;text-transform:uppercase;
-  color:var(--ink3);margin-bottom:12px;
-}
-
-/* EVALUADORES GRID */
+.cfg-card{width:100%;max-width:860px;background:var(--bg2);border:1px solid var(--bord);border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:28px;box-shadow:var(--shad2);}
+.s-title{font-family:var(--fm);font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;}
 .eval-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
-.ec{
-  padding:16px 10px;border:1px solid var(--bord2);border-radius:12px;
-  cursor:pointer;transition:all .15s;background:var(--bg3);
-  display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
-  position:relative;
-}
+.ec{padding:16px 10px;border:1px solid var(--bord2);border-radius:12px;cursor:pointer;transition:all .15s;background:var(--bg3);display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;position:relative;}
 .ec:hover{border-color:var(--bord);background:var(--bg4);transform:translateY(-2px);box-shadow:var(--shad);}
 .ec.active{border-color:var(--gold);background:var(--goldd);box-shadow:0 0 0 1px var(--gold),var(--shad);}
 .ec-icon{font-size:24px;}
 .ec-name{font-family:var(--fc);font-size:14px;font-weight:600;color:var(--ink);line-height:1.2;}
 .ec-desc{font-family:var(--fm);font-size:9px;color:var(--ink3);line-height:1.4;}
-.ec-check{
-  position:absolute;top:8px;right:8px;
-  width:16px;height:16px;border-radius:50%;
-  background:var(--gold);display:none;
-  align-items:center;justify-content:center;
-  font-size:9px;color:var(--bg2);
-}
+.ec-check{position:absolute;top:8px;right:8px;width:16px;height:16px;border-radius:50%;background:var(--gold);display:none;align-items:center;justify-content:center;font-size:9px;color:var(--bg2);}
 .ec.active .ec-check{display:flex;}
-
-/* APUNTES */
 .apuntes-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:12px;}
-.upload-box{
-  border:1.5px dashed var(--bord);border-radius:10px;
-  padding:20px;text-align:center;cursor:pointer;transition:all .15s;
-  background:var(--bg3);display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:8px;
-}
+.upload-box{border:1.5px dashed var(--bord);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all .15s;background:var(--bg3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
 .upload-box:hover{border-color:var(--gold);background:var(--goldd);}
 .upload-box.has{border-color:var(--grn);border-style:solid;background:rgba(46,122,80,.05);}
 .upload-icon{font-size:26px;opacity:.4;}
 .upload-lbl{font-family:var(--fm);font-size:10px;color:var(--ink3);letter-spacing:.04em;}
 .upload-fn{font-family:var(--fm);font-size:10px;color:var(--grn2);font-weight:500;margin-top:2px;}
 #fi{display:none;}
-textarea.apunte-ta{
-  width:100%;min-height:80px;padding:14px 16px;
-  border:1px solid var(--bord2);border-radius:10px;
-  font-family:var(--fb);font-size:14px;line-height:1.55;
-  background:var(--bg3);color:var(--ink2);resize:none;outline:none;
-  transition:border-color .15s;
-}
+textarea.apunte-ta{width:100%;min-height:80px;padding:14px 16px;border:1px solid var(--bord2);border-radius:10px;font-family:var(--fb);font-size:14px;line-height:1.55;background:var(--bg3);color:var(--ink2);resize:none;outline:none;transition:border-color .15s;}
 textarea.apunte-ta:focus{border-color:var(--gold);}
 textarea.apunte-ta::placeholder{color:var(--ink3);}
-
-/* FORMATO + INTENSIDAD */
 .fmt-int-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
 .pill-row{display:flex;gap:6px;flex-wrap:wrap;}
-.pill{
-  padding:8px 16px;border:1px solid var(--bord2);border-radius:20px;
-  cursor:pointer;transition:all .15s;background:var(--bg3);
-  display:flex;flex-direction:column;align-items:center;gap:2px;
-}
+.pill{padding:8px 16px;border:1px solid var(--bord2);border-radius:20px;cursor:pointer;transition:all .15s;background:var(--bg3);display:flex;flex-direction:column;align-items:center;gap:2px;}
 .pill:hover{border-color:var(--bord);}
 .pill.active{border-color:var(--gold);background:var(--goldd);color:var(--gold);}
 .pill-main{font-family:var(--fc);font-size:13px;font-weight:600;color:var(--ink);}
 .pill.active .pill-main{color:var(--gold);}
 .pill-sub{font-family:var(--fm);font-size:9px;color:var(--ink3);}
-
 .int-wrap{display:flex;flex-direction:column;gap:8px;}
 .int-labels{display:flex;justify-content:space-between;font-family:var(--fm);font-size:10px;color:var(--ink3);}
 .int-val{color:var(--gold);font-weight:500;}
 input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--bg5);border-radius:2px;outline:none;}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:var(--gold);border-radius:50%;cursor:pointer;box-shadow:0 0 0 3px rgba(184,144,42,.15);}
-
-/* BOTÓN COMENZAR */
-.btn-comenzar{
-  width:100%;padding:16px;border-radius:12px;
-  font-family:var(--fc);font-size:18px;font-weight:600;letter-spacing:.04em;
-  background:var(--ink);color:var(--bg2);border:none;cursor:pointer;
-  transition:all .18s;box-shadow:0 4px 16px rgba(0,0,0,.12);
-}
+.btn-comenzar{width:100%;padding:16px;border-radius:12px;font-family:var(--fc);font-size:18px;font-weight:600;letter-spacing:.04em;background:var(--ink);color:var(--bg2);border:none;cursor:pointer;transition:all .18s;box-shadow:0 4px 16px rgba(0,0,0,.12);}
 .btn-comenzar:hover{background:#2c2820;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.18);}
 .btn-comenzar:disabled{background:var(--bg5);color:var(--ink3);cursor:not-allowed;transform:none;box-shadow:none;}
 .btn-comenzar-note{font-family:var(--fm);font-size:10px;color:var(--ink3);text-align:center;margin-top:-16px;letter-spacing:.04em;}
 
-/* ══════════════════════════════════════════════════════════
-   PANTALLA 2 — SESIÓN
-══════════════════════════════════════════════════════════ */
-#s-session{
-  display:flex;flex-direction:column;height:100vh;
-}
+/* ══ HISTORIAL BADGE en CONFIG ══ */
+.hist-link{font-family:var(--fm);font-size:10px;color:var(--gold);cursor:pointer;letter-spacing:.06em;padding:4px 10px;border:1px solid rgba(184,144,42,.3);border-radius:5px;background:var(--goldd);}
+.hist-link:hover{background:var(--goldb);}
 
-/* TOPBAR SESIÓN */
-.ses-bar{
-  height:52px;flex-shrink:0;
-  background:var(--bg2);border-bottom:1px solid var(--bord);
-  display:flex;align-items:center;padding:0 28px;gap:16px;
-  box-shadow:var(--shad);
-}
+/* ══ SESIÓN ══ */
+#s-session{display:flex;flex-direction:column;height:100vh;}
+.ses-bar{height:52px;flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--bord);display:flex;align-items:center;padding:0 28px;gap:16px;box-shadow:var(--shad);}
 .ses-logo{font-family:var(--fc);font-size:18px;font-weight:600;letter-spacing:.04em;color:var(--ink);cursor:pointer;}
 .ses-logo em{color:var(--gold);font-style:normal;}
 .ses-divider{width:1px;height:20px;background:var(--bord);}
-.ses-prof-tag{
-  display:flex;align-items:center;gap:6px;
-  font-family:var(--fb);font-size:13px;font-weight:500;color:var(--ink2);
-}
+.ses-prof-tag{display:flex;align-items:center;gap:6px;font-family:var(--fb);font-size:13px;font-weight:500;color:var(--ink2);}
 .ses-prof-icon{font-size:15px;}
 .ses-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
-.ses-badge{
-  font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
-  padding:4px 12px;border-radius:5px;border:1px solid;
-}
+.ses-badge{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:5px;border:1px solid;}
 .ses-badge.activa{color:var(--grn2);border-color:rgba(58,150,96,.3);background:rgba(58,150,96,.08);}
 .ses-badge.inactiva{color:var(--ink3);border-color:var(--bord);background:var(--bg3);}
+/* GRABACIÓN indicador */
+.rec-indicator{display:none;align-items:center;gap:5px;font-family:var(--fm);font-size:10px;color:var(--red);letter-spacing:.08em;animation:pdot .8s ease-in-out infinite;}
+.rec-indicator.show{display:flex;}
+.rec-dot{width:6px;height:6px;border-radius:50%;background:var(--red);}
 
-/* BODY SESIÓN: 3 COLS */
-.ses-body{
-  flex:1;min-height:0;
-  display:grid;
-  grid-template-columns:240px 1fr 240px;
-  overflow:hidden;
-}
+.ses-body{flex:1;min-height:0;display:grid;grid-template-columns:240px 1fr 240px;overflow:hidden;}
 
-/* COL IZQUIERDA — STATS */
-.ses-left{
-  border-right:1px solid var(--bord);
-  padding:24px 18px;
-  display:flex;flex-direction:column;gap:20px;
-  background:var(--bg2);overflow-y:auto;
-}
+/* IZQUIERDA */
+.ses-left{border-right:1px solid var(--bord);padding:24px 18px;display:flex;flex-direction:column;gap:20px;background:var(--bg2);overflow-y:auto;}
 .stat-big{text-align:center;}
 .stat-big-num{font-family:var(--fc);font-size:44px;font-weight:600;color:var(--ink);line-height:1;letter-spacing:-.02em;}
 .stat-big-lbl{font-family:var(--fm);font-size:9px;color:var(--ink3);letter-spacing:.16em;text-transform:uppercase;margin-top:4px;}
@@ -231,105 +130,61 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .qlog{display:flex;flex-direction:column;gap:5px;max-height:200px;overflow-y:auto;}
 .qlog::-webkit-scrollbar{width:2px;}
 .qlog::-webkit-scrollbar-thumb{background:var(--bord);}
-.qi{padding:8px 10px;border-radius:8px;border:1px solid var(--bord2);border-left:2px solid var(--gold);background:var(--bg3);font-family:var(--fb);font-size:12px;line-height:1.5;color:var(--ink3);}
+.qi{padding:8px 10px;border-radius:8px;border:1px solid var(--bord2);border-left:2px solid var(--gold);background:var(--bg3);font-family:var(--fb);font-size:12px;line-height:1.5;color:var(--ink3);cursor:pointer;transition:background .15s;}
+.qi:hover{background:var(--bg4);}
 .qi.active{color:var(--ink2);background:var(--bg2);}
 .qi-n{font-family:var(--fm);font-size:8px;color:var(--ink3);margin-bottom:2px;letter-spacing:.1em;text-transform:uppercase;}
 
-/* COL CENTRAL — AVATAR + CHAT */
-.ses-center{
-  display:flex;flex-direction:column;overflow:hidden;background:var(--bg);
-}
+/* FEEDBACK INLINE */
+.fb-chip{display:inline-flex;align-items:center;gap:4px;font-family:var(--fm);font-size:9px;padding:3px 8px;border-radius:4px;margin-top:5px;font-weight:500;}
+.fb-chip.ok{background:rgba(46,122,80,.08);color:var(--grn);border:1px solid rgba(46,122,80,.2);}
+.fb-chip.warn{background:rgba(184,144,42,.08);color:var(--gold3);border:1px solid rgba(184,144,42,.2);}
+.fb-chip.bad{background:rgba(192,57,43,.08);color:var(--red);border:1px solid rgba(192,57,43,.2);}
 
-/* STAGE */
-/* ── PROFESOR VIDEO ── */
-.prof-video-wrap{
-  position:relative;
-  display:flex;align-items:flex-end;justify-content:center;
-}
-
-/* AV WRAP ocupa todo el stage */
-.av-wrap{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-  padding-bottom:10px;
-  z-index:2;
-}
-@keyframes avFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
-
-/* Video centrado en el stage */
-.prof-video-wrap{
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-65%) scale(2.2);
-  width:100%;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-  background:#0a0906;
-}
-#prof-video{
-  width:100%;
-  height:auto;
-  display:block;
-  transition:filter .3s;
-}
-#prof-img-fallback{
-  width:100%;
-  height:auto;
-  display:block;
-}
-
-/* Glow cuando habla */
-.av-talking .prof-video-wrap{
-  box-shadow:inset 0 0 40px rgba(184,144,42,0.2);
-}
-.av-talking #prof-video{
-  filter:brightness(1.05) saturate(1.1);
-}
-
-/* Nod al terminar */
-@keyframes avNod{0%,100%{transform:rotate(0)}25%{transform:rotate(2deg)}75%{transform:rotate(-1.5deg)}}
-.av-nodding #prof-video{ animation:avNod .65s ease-in-out 2; }
-
-/* Info nombre al fondo del stage */
-.av-wrap .abars{ position:relative;z-index:3;margin-bottom:4px; }
-.av-wrap .av-name{ position:relative;z-index:3; }
-.av-wrap .av-sub{ position:relative;z-index:3; }
-
-.stage{
-  flex:0 0 320px;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-  position:relative;overflow:hidden;
-  background:#0a0906;
-}
-.stage-rays{
-  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-  width:600px;height:320px;
-  background:conic-gradient(from 260deg at 50% 100%,
-    transparent 0deg,rgba(184,144,42,.05) 2deg,transparent 5deg,
-    transparent 9deg,rgba(184,144,42,.07) 11deg,transparent 14deg,
-    transparent 18deg,rgba(184,144,42,.05) 20deg,transparent 23deg,
-    transparent 27deg,rgba(184,144,42,.09) 29deg,transparent 32deg,
-    transparent 37deg,rgba(184,144,42,.04) 39deg,transparent 42deg
-  );
-}
+/* CENTRO */
+.ses-center{display:flex;flex-direction:column;overflow:hidden;background:var(--bg);}
+.stage{flex:0 0 320px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative;overflow:hidden;background:#0a0906;}
+.stage-rays{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:600px;height:320px;background:conic-gradient(from 260deg at 50% 100%,transparent 0deg,rgba(184,144,42,.05) 2deg,transparent 5deg,transparent 9deg,rgba(184,144,42,.07) 11deg,transparent 14deg,transparent 18deg,rgba(184,144,42,.05) 20deg,transparent 23deg,transparent 27deg,rgba(184,144,42,.09) 29deg,transparent 32deg,transparent 37deg,rgba(184,144,42,.04) 39deg,transparent 42deg);}
 .stage-halo{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(ellipse,rgba(184,144,42,.13) 0%,rgba(184,144,42,.03) 45%,transparent 70%);bottom:-40px;left:50%;transform:translateX(-50%);}
 .stage-ring{position:absolute;width:300px;height:300px;border-radius:50%;border:1px solid rgba(184,144,42,.12);bottom:-50px;left:50%;transform:translateX(-50%);}
 .stage-ring2{position:absolute;width:340px;height:340px;border-radius:50%;border:1px solid rgba(184,144,42,.06);bottom:-70px;left:50%;transform:translateX(-50%);}
 .stage-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(184,144,42,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(184,144,42,.025) 1px,transparent 1px);background-size:44px 44px;}
 
-.av-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;z-index:2;}
-#asvg{width:180px;height:220px;overflow:visible;filter:drop-shadow(0 10px 40px rgba(0,0,0,.8)) drop-shadow(0 0 30px rgba(184,144,42,.1));}
+/* VIDEO DEL PROFESOR — fix principal */
+.prof-stage-video{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  z-index:1;
+}
+.prof-stage-video video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+  opacity:0;
+  transition:opacity .4s;
+}
+.prof-stage-video video.loaded{opacity:1;}
+.prof-stage-video img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+}
+
+.av-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;z-index:2;padding-bottom:10px;}
 .av-name{font-family:var(--fc);font-size:16px;font-weight:600;color:var(--gold2);letter-spacing:.06em;font-style:italic;}
 .av-sub{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.12em;margin-top:-4px;}
 .abars{display:flex;align-items:flex-end;gap:3px;height:14px;margin-top:2px;}
-.abar{width:3px;background:var(--gold2);border-radius:1px;height:3px;opacity:.2;}
-
-/* STATUS */
-.av-status{
-  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
-  display:flex;align-items:center;gap:6px;
-  background:rgba(0,0,0,.4);padding:5px 12px;border-radius:20px;backdrop-filter:blur(6px);
-}
+.abar{width:3px;background:var(--gold2);border-radius:1px;height:2px;opacity:.2;transition:height .08s ease, opacity .08s ease;}
+.av-status{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.4);padding:5px 12px;border-radius:20px;backdrop-filter:blur(6px);z-index:4;}
 .av-sdot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s;}
 .av-sdot.active{background:var(--grn2);box-shadow:0 0 6px rgba(58,150,96,.5);animation:pdot 2s ease-in-out infinite;}
 .av-sdot.speaking{background:var(--gold2);box-shadow:0 0 6px rgba(212,168,64,.5);animation:pdot .55s ease-in-out infinite;}
@@ -359,8 +214,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .td:nth-child(2){animation-delay:.2s}.td:nth-child(3){animation-delay:.4s}
 @keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
 .empty-msg{font-family:var(--fb);font-size:14px;color:var(--ink3);text-align:center;padding:24px 0;font-style:italic;}
-
-/* INPUT */
 .input-bar{padding:12px 18px;border-top:1px solid var(--bord);display:flex;gap:7px;align-items:flex-end;background:var(--bg2);}
 .input-wrap{flex:1;}
 .srec{font-family:var(--fm);font-size:9px;padding:2px 8px;border-radius:3px;background:rgba(192,57,43,.08);color:var(--red);border:1px solid rgba(192,57,43,.2);display:none;margin-bottom:3px;letter-spacing:.06em;animation:pdot .8s ease-in-out infinite;}
@@ -376,100 +229,101 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .sbtn:hover{background:#2c2820;transform:scale(1.05);}
 .sbtn:disabled{background:var(--bg5);color:var(--ink3);cursor:not-allowed;transform:none;}
 
-/* COL DERECHA — ACCIONES */
-.ses-right-col{
-  border-left:1px solid var(--bord);
-  padding:24px 18px;
-  display:flex;flex-direction:column;gap:16px;
-  background:var(--bg2);overflow-y:auto;
-}
-.action-btn{
-  width:100%;padding:13px;border-radius:10px;
-  font-family:var(--fc);font-size:16px;font-weight:600;
-  cursor:pointer;transition:all .15s;border:1px solid;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-}
+/* DERECHA */
+.ses-right-col{border-left:1px solid var(--bord);padding:24px 18px;display:flex;flex-direction:column;gap:14px;background:var(--bg2);overflow-y:auto;}
+.action-btn{width:100%;padding:13px;border-radius:10px;font-family:var(--fc);font-size:16px;font-weight:600;cursor:pointer;transition:all .15s;border:1px solid;display:flex;align-items:center;justify-content:center;gap:8px;}
 .action-btn.primary{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.12);}
-.action-btn.primary:hover{background:#2c2820;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.16);}
+.action-btn.primary:hover{background:#2c2820;transform:translateY(-1px);}
 .action-btn.primary:disabled{background:var(--bg5);color:var(--ink3);border-color:var(--bord);cursor:not-allowed;transform:none;box-shadow:none;}
 .action-btn.secondary{background:var(--bg3);color:var(--ink2);border-color:var(--bord);}
 .action-btn.secondary:hover{background:var(--bg4);}
 .action-btn.gold{background:var(--goldd);color:var(--gold3);border-color:rgba(184,144,42,.3);}
 .action-btn.gold:hover{background:var(--goldb);border-color:var(--gold);}
-.action-btn.danger{background:rgba(192,57,43,.06);color:var(--red);border-color:rgba(192,57,43,.2);}
-.action-btn.danger:hover{background:rgba(192,57,43,.1);}
+.action-btn.teal{background:rgba(46,122,80,.06);color:var(--grn);border-color:rgba(46,122,80,.25);}
+.action-btn.teal:hover{background:rgba(46,122,80,.12);}
 .action-btn.exit{background:transparent;color:var(--ink3);border-color:var(--bord2);font-size:13px;}
 .action-btn.exit:hover{background:var(--bg3);color:var(--ink2);}
 .action-btn-note{font-family:var(--fm);font-size:9px;color:var(--ink3);text-align:center;letter-spacing:.04em;margin-top:-8px;}
-
 .prog-wrap{display:none;}
 .prog-head{display:flex;justify-content:space-between;font-family:var(--fm);font-size:10px;color:var(--ink3);margin-bottom:6px;}
 .prog-bg{height:3px;background:var(--bg5);border-radius:2px;overflow:hidden;}
 .prog-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s;width:0%;}
 .tok{font-family:var(--fm);font-size:9px;color:var(--ink3);text-align:center;opacity:.4;margin-top:auto;}
 
-/* ANIMATIONS */
+/* ANIMACIONES */
 @keyframes blink{0%,88%,100%{transform:scaleY(1)}94%{transform:scaleY(0.05)}}
 @keyframes breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.014)}}
 @keyframes nod{0%,100%{transform:rotate(0)}30%{transform:rotate(3.5deg)}70%{transform:rotate(-2.5deg)}}
-@keyframes audiob{0%,100%{height:3px}50%{height:14px}}
-#body-g{animation:breathe 3.4s ease-in-out infinite;transform-origin:90px 210px;}
-#leye,#reye{animation:blink 5s ease-in-out infinite;transform-origin:center;}
-#reye{animation-delay:.1s;}
-.av-nodding #head-g{animation:nod .7s ease-in-out 2;}
-.av-talking .abar{opacity:.8;}
-.av-talking .abar:nth-child(1){animation:audiob .38s ease-in-out infinite;}
-.av-talking .abar:nth-child(2){animation:audiob .38s ease-in-out .08s infinite;}
-.av-talking .abar:nth-child(3){animation:audiob .38s ease-in-out .16s infinite;}
-.av-talking .abar:nth-child(4){animation:audiob .38s ease-in-out .05s infinite;}
-.av-talking .abar:nth-child(5){animation:audiob .38s ease-in-out .12s infinite;}
 
-/* MODAL */
+/* MODAL NOTA */
 .modal-ov{position:fixed;inset:0;background:rgba(26,24,20,.55);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
 .modal-ov.show{opacity:1;pointer-events:all;}
-.modal-box{background:var(--bg2);border:1px solid var(--bord);border-radius:14px;padding:36px 32px;max-width:480px;width:92%;transform:translateY(20px);transition:transform .3s;box-shadow:0 24px 64px rgba(0,0,0,.14);position:relative;overflow:hidden;}
+.modal-box{background:var(--bg2);border:1px solid var(--bord);border-radius:14px;padding:36px 32px;max-width:520px;width:92%;transform:translateY(20px);transition:transform .3s;box-shadow:0 24px 64px rgba(0,0,0,.14);position:relative;overflow:hidden;max-height:90vh;overflow-y:auto;}
 .modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
 .modal-ov.show .modal-box{transform:translateY(0);}
 .m-ey{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:18px;}
 .m-nota-row{display:flex;align-items:baseline;gap:10px;margin-bottom:4px;}
 .m-nota{font-family:var(--fc);font-size:88px;font-weight:700;line-height:1;letter-spacing:-.02em;}
-.m-nota.rojo{color:#e53935;}
-.m-nota.naranja{color:#f57c00;}
-.m-nota.amarillo{color:var(--gold);}
-.m-nota.verde{color:var(--grn2);}
+.m-nota.rojo{color:#e53935;}.m-nota.naranja{color:#f57c00;}.m-nota.amarillo{color:var(--gold);}.m-nota.verde{color:var(--grn2);}
 .m-nota-max{font-family:var(--fc);font-size:22px;color:var(--ink3);margin-bottom:6px;}
 .m-cpt{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:18px;}
 .m-div{height:1px;background:var(--bord2);margin:14px 0;}
 .m-fb{font-family:var(--fb);font-size:15px;line-height:1.7;color:var(--ink2);margin-bottom:18px;border-left:2px solid var(--gold);padding-left:13px;}
-.m-desg{display:flex;flex-direction:column;margin-bottom:24px;}
+.m-desg{display:flex;flex-direction:column;margin-bottom:18px;}
 .m-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bord2);}
 .m-row:last-child{border:none;}
 .m-row span:first-child{font-family:var(--fb);font-size:14px;color:var(--ink3);}
 .m-row span:last-child{font-family:var(--fm);font-size:11px;font-weight:500;color:var(--ink2);}
-.m-btns{display:flex;gap:8px;}
-.mbtn{flex:1;padding:11px;border-radius:8px;font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid;}
+/* Feedback por pregunta en modal */
+.m-qfb{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.m-qfb-item{background:var(--bg3);border:1px solid var(--bord2);border-radius:8px;padding:10px 12px;}
+.m-qfb-q{font-family:var(--fm);font-size:9px;color:var(--ink3);margin-bottom:4px;letter-spacing:.06em;}
+.m-qfb-text{font-family:var(--fb);font-size:13px;color:var(--ink2);line-height:1.5;}
+.m-qfb-chip{display:inline-flex;margin-top:5px;font-family:var(--fm);font-size:9px;padding:2px 7px;border-radius:3px;}
+.m-qfb-chip.ok{background:rgba(46,122,80,.08);color:var(--grn);}
+.m-qfb-chip.warn{background:rgba(184,144,42,.08);color:var(--gold3);}
+.m-qfb-chip.bad{background:rgba(192,57,43,.08);color:var(--red);}
+.m-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.mbtn{flex:1;padding:11px;border-radius:8px;font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid;min-width:80px;}
 .mbtn.s{background:var(--bg3);color:var(--ink2);border-color:var(--bord);}
 .mbtn.s:hover{background:var(--bg4);}
 .mbtn.p{background:var(--ink);color:#fff;border-color:var(--ink);}
 .mbtn.p:hover{background:#2c2820;}
+.mbtn.g{background:var(--goldd);color:var(--gold3);border-color:rgba(184,144,42,.3);}
+.mbtn.g:hover{background:var(--goldb);}
+
+/* MODAL HISTORIAL */
+.hist-modal-box{max-width:680px;}
+.hist-list{display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto;}
+.hist-item{background:var(--bg3);border:1px solid var(--bord2);border-radius:10px;padding:14px 16px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:12px;}
+.hist-item:hover{background:var(--bg4);border-color:var(--bord);}
+.hist-nota{font-family:var(--fc);font-size:28px;font-weight:700;min-width:48px;text-align:center;}
+.hist-nota.rojo{color:#e53935;}.hist-nota.naranja{color:#f57c00;}.hist-nota.amarillo{color:var(--gold);}.hist-nota.verde{color:var(--grn2);}
+.hist-info{flex:1;}
+.hist-prof{font-family:var(--fc);font-size:14px;font-weight:600;color:var(--ink);}
+.hist-meta{font-family:var(--fm);font-size:9px;color:var(--ink3);margin-top:3px;letter-spacing:.04em;}
+.hist-dl{font-family:var(--fm);font-size:10px;color:var(--gold);padding:6px 10px;border:1px solid rgba(184,144,42,.3);border-radius:6px;background:var(--goldd);white-space:nowrap;}
+.hist-dl:hover{background:var(--goldb);}
+.hist-empty{font-family:var(--fb);font-size:14px;color:var(--ink3);text-align:center;padding:32px;font-style:italic;}
+
 ::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--bord);border-radius:2px;}
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════════════
-     PANTALLA 1 — CONFIGURACIÓN
-══════════════════════════════════════════════════════════ -->
+<!-- ══ CONFIG ══ -->
 <div class="screen" id="s-config">
-
   <div class="cfg-header">
     <div class="cfg-logo">
       <div class="cfg-logo-box">L</div>
       <div class="cfg-logo-text">LEX <em>ORAL</em></div>
     </div>
-    <div class="cfg-srv">
-      <div class="sdot" id="sdot-cfg"></div>
-      <span id="srv-txt-cfg">Verificando servidor…</span>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="hist-link" onclick="abrirHistorial()">📋 Historial</span>
+      <div class="cfg-srv">
+        <div class="sdot" id="sdot-cfg"></div>
+        <span id="srv-txt-cfg">Verificando servidor…</span>
+      </div>
     </div>
   </div>
 
@@ -479,45 +333,16 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
   </div>
 
   <div class="cfg-card">
-
-    <!-- EVALUADORES -->
     <div>
       <div class="s-title">Elige tu evaluador</div>
       <div class="eval-grid">
-        <div class="ec active" data-p="rigorista" onclick="selProf(this)">
-          <div class="ec-icon">⚖️</div>
-          <div class="ec-name">Dr. Rigorista</div>
-          <div class="ec-desc">Evaluación técnica exhaustiva</div>
-          <div class="ec-check">✓</div>
-        </div>
-        <div class="ec" data-p="dialéctico" onclick="selProf(this)">
-          <div class="ec-icon">🔍</div>
-          <div class="ec-name">Prof. Dialéctico</div>
-          <div class="ec-desc">Interrogación por razonamiento</div>
-          <div class="ec-check">✓</div>
-        </div>
-        <div class="ec" data-p="académico" onclick="selProf(this)">
-          <div class="ec-icon">🎓</div>
-          <div class="ec-name">Prof. Académico</div>
-          <div class="ec-desc">Corrección guiada y pedagógica</div>
-          <div class="ec-check">✓</div>
-        </div>
-        <div class="ec" data-p="socrático" onclick="selProf(this)">
-          <div class="ec-icon">📜</div>
-          <div class="ec-name">Prof. Socrático</div>
-          <div class="ec-desc">Mayéutica y descubrimiento</div>
-          <div class="ec-check">✓</div>
-        </div>
-        <div class="ec" data-p="examinador" onclick="selProf(this)">
-          <div class="ec-icon">📋</div>
-          <div class="ec-name">Prof. Examinador</div>
-          <div class="ec-desc">Simulación de examen real</div>
-          <div class="ec-check">✓</div>
-        </div>
+        <div class="ec active" data-p="rigorista" onclick="selProf(this)"><div class="ec-icon">⚖️</div><div class="ec-name">Dr. Rigorista</div><div class="ec-desc">Evaluación técnica exhaustiva</div><div class="ec-check">✓</div></div>
+        <div class="ec" data-p="dialéctico" onclick="selProf(this)"><div class="ec-icon">🔍</div><div class="ec-name">Prof. Dialéctico</div><div class="ec-desc">Interrogación por razonamiento</div><div class="ec-check">✓</div></div>
+        <div class="ec" data-p="académico" onclick="selProf(this)"><div class="ec-icon">🎓</div><div class="ec-name">Prof. Académico</div><div class="ec-desc">Corrección guiada y pedagógica</div><div class="ec-check">✓</div></div>
+        <div class="ec" data-p="socrático" onclick="selProf(this)"><div class="ec-icon">📜</div><div class="ec-name">Prof. Socrático</div><div class="ec-desc">Mayéutica y descubrimiento</div><div class="ec-check">✓</div></div>
+        <div class="ec" data-p="examinador" onclick="selProf(this)"><div class="ec-icon">📋</div><div class="ec-name">Prof. Examinador</div><div class="ec-desc">Simulación de examen real</div><div class="ec-check">✓</div></div>
       </div>
     </div>
-
-    <!-- APUNTES -->
     <div>
       <div class="s-title">Tus apuntes</div>
       <div class="apuntes-grid">
@@ -530,28 +355,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
       </div>
       <input type="file" id="fi" accept=".txt" onchange="handleFile(this)">
     </div>
-
-    <!-- FORMATO + INTENSIDAD -->
     <div class="fmt-int-grid">
       <div>
         <div class="s-title">Formato de evaluación</div>
         <div class="pill-row">
-          <div class="pill active" data-m="libre" onclick="selModo(this)">
-            <span class="pill-main">∞ Libre</span>
-            <span class="pill-sub">sin límite</span>
-          </div>
-          <div class="pill" data-m="5" onclick="selModo(this)">
-            <span class="pill-main">5 preguntas</span>
-            <span class="pill-sub">~10 min</span>
-          </div>
-          <div class="pill" data-m="3" onclick="selModo(this)">
-            <span class="pill-main">3 preguntas</span>
-            <span class="pill-sub">~6 min</span>
-          </div>
-          <div class="pill" data-m="10" onclick="selModo(this)">
-            <span class="pill-main">10 preguntas</span>
-            <span class="pill-sub">completo</span>
-          </div>
+          <div class="pill active" data-m="libre" onclick="selModo(this)"><span class="pill-main">∞ Libre</span><span class="pill-sub">sin límite</span></div>
+          <div class="pill" data-m="5" onclick="selModo(this)"><span class="pill-main">5 preguntas</span><span class="pill-sub">~10 min</span></div>
+          <div class="pill" data-m="3" onclick="selModo(this)"><span class="pill-main">3 preguntas</span><span class="pill-sub">~6 min</span></div>
+          <div class="pill" data-m="10" onclick="selModo(this)"><span class="pill-main">10 preguntas</span><span class="pill-sub">completo</span></div>
         </div>
       </div>
       <div>
@@ -562,22 +373,13 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
         </div>
       </div>
     </div>
-
-    <!-- CTA -->
-    <button class="btn-comenzar" id="btn-cfg" onclick="irASesion()" disabled>
-      Comenzar sesión →
-    </button>
+    <button class="btn-comenzar" id="btn-cfg" onclick="irASesion()" disabled>Comenzar sesión →</button>
     <div class="btn-comenzar-note" id="cfg-note">Verificando conexión con el servidor…</div>
-
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     PANTALLA 2 — SESIÓN
-══════════════════════════════════════════════════════════ -->
+<!-- ══ SESIÓN ══ -->
 <div class="screen off" id="s-session">
-
-  <!-- TOPBAR -->
   <div class="ses-bar">
     <div class="ses-logo" onclick="salirSesion()">LEX <em>ORAL</em></div>
     <div class="ses-divider"></div>
@@ -586,14 +388,17 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
       <span id="ses-nombre">Dr. Rigorista</span>
     </div>
     <div class="ses-right">
+      <!-- Indicador de grabación -->
+      <div class="rec-indicator" id="rec-indicator">
+        <div class="rec-dot"></div>
+        <span>GRABANDO</span>
+      </div>
       <div class="ses-badge inactiva" id="ses-badge">Inactiva</div>
     </div>
   </div>
 
-  <!-- BODY -->
   <div class="ses-body">
-
-    <!-- IZQUIERDA: ESTADÍSTICAS -->
+    <!-- IZQUIERDA -->
     <div class="ses-left">
       <div>
         <div class="sec-lbl" style="margin-bottom:14px;">Estadísticas</div>
@@ -603,38 +408,24 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
         </div>
       </div>
       <div class="stat-grid">
-        <div class="stat-box">
-          <div class="stat-box-n" id="stat-p">0</div>
-          <div class="stat-box-l">Preguntas</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-box-n" id="stat-prec">—</div>
-          <div class="stat-box-l">Palabras prom.</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-box-n" id="stat-t">0</div>
-          <div class="stat-box-l">Términos juríd.</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-box-n" id="stat-seg">—</div>
-          <div class="stat-box-l">Seg. prom. resp.</div>
-        </div>
+        <div class="stat-box"><div class="stat-box-n" id="stat-p">0</div><div class="stat-box-l">Preguntas</div></div>
+        <div class="stat-box"><div class="stat-box-n" id="stat-prec">—</div><div class="stat-box-l">Palabras prom.</div></div>
+        <div class="stat-box"><div class="stat-box-n" id="stat-t">0</div><div class="stat-box-l">Términos juríd.</div></div>
+        <div class="stat-box"><div class="stat-box-n" id="stat-seg">—</div><div class="stat-box-l">Seg. prom. resp.</div></div>
       </div>
-
       <div>
         <div class="sec-lbl" style="margin-bottom:10px;">Registro</div>
         <div class="qlog" id="ql">
           <div style="font-family:var(--fm);font-size:10px;color:var(--ink3);">Las preguntas aparecerán aquí.</div>
         </div>
       </div>
-
       <div class="prog-wrap" id="prog-wrap">
         <div class="prog-head"><span>Progreso</span><span id="prog-label">0 / 0</span></div>
         <div class="prog-bg"><div class="prog-fill" id="prog-fill"></div></div>
       </div>
     </div>
 
-    <!-- CENTRO: AVATAR + CHAT -->
+    <!-- CENTRO -->
     <div class="ses-center">
       <div class="stage">
         <div class="stage-grid"></div>
@@ -643,32 +434,22 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
         <div class="stage-ring"></div>
         <div class="stage-ring2"></div>
 
-        <!-- PROFESOR PNG + BOCA ANIMADA -->
-      <div class="av-wrap" id="av-wrap">
-        <div class="prof-video-wrap" id="prof-img-wrap">
-          <!-- VIDEO del Profesor Carrasco en loop -->
-          <video
-            id="prof-video"
-            src="/profesor.mp4"
-            loop
-            muted
-            playsinline
-            preload="auto">
-          </video>
-          <img id="prof-img-fallback"
-               src="/profesor.png"
-               alt="Profesor"
-               style="display:none;">
+        <!-- VIDEO DEL PROFESOR (fix) -->
+        <div class="prof-stage-video" id="prof-stage-video">
+          <video id="prof-video" src="/profesor.mp4" loop muted playsinline preload="auto"></video>
+          <img id="prof-img-fallback" src="/profesor.png" alt="Profesor" style="display:none;">
         </div>
-        <div class="abars" id="abars">
-          <div class="abar"></div><div class="abar"></div><div class="abar"></div>
-          <div class="abar"></div><div class="abar"></div>
-        </div>
-        <div class="av-name" id="av-name">Dr. Rigorista</div>
-        <div class="av-sub"  id="av-sub">Evaluador técnico exhaustivo</div>
-      </div>div>
 
-        <div class="av-status" style="z-index:4;">
+        <div class="av-wrap" id="av-wrap" style="z-index:2;">
+          <div class="abars" id="abars">
+            <div class="abar"></div><div class="abar"></div><div class="abar"></div>
+            <div class="abar"></div><div class="abar"></div>
+          </div>
+          <div class="av-name" id="av-name">Dr. Rigorista</div>
+          <div class="av-sub" id="av-sub">Evaluador técnico exhaustivo</div>
+        </div>
+
+        <div class="av-status">
           <div class="av-sdot" id="av-sdot"></div>
           <div class="av-stxt" id="av-stxt">INACTIVO</div>
         </div>
@@ -688,38 +469,36 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
             <div class="srec" id="srec">● REC</div>
             <textarea id="ui" placeholder="Escribe tu respuesta… (Enter para enviar)" onkeydown="hk(event)" oninput="ar(this)" disabled rows="1"></textarea>
           </div>
-          <button class="ibtn" id="bm" onclick="togMic()">🎙</button>
+          <button class="ibtn" id="bm" onclick="togMic()" title="Micrófono">🎙</button>
           <button class="sbtn" id="bs" onclick="send()" disabled>↑</button>
         </div>
       </div>
     </div>
 
-    <!-- DERECHA: ACCIONES -->
+    <!-- DERECHA -->
     <div class="ses-right-col">
       <div class="sec-lbl" style="margin-bottom:4px;">Acciones</div>
 
-      <button class="action-btn primary" id="btn-iniciar" onclick="iniciar()">
-        ▶ Iniciar pregunta
-      </button>
-
-      <button class="action-btn secondary" onclick="nuevaQ()">
-        ↺ Nueva pregunta
-      </button>
-
-      <button class="action-btn gold" id="btn-nota" onclick="terminarExamen()" style="display:none;">
-        ★ Obtener nota final
-      </button>
+      <button class="action-btn primary" id="btn-iniciar" onclick="iniciar()">▶ Iniciar pregunta</button>
+      <button class="action-btn secondary" onclick="nuevaQ()">↺ Nueva pregunta</button>
+      <button class="action-btn gold" id="btn-nota" onclick="terminarExamen()" style="display:none;">★ Obtener nota final</button>
       <div class="action-btn-note" id="nota-note" style="display:none;">Evalúa toda la sesión</div>
 
       <div style="height:1px;background:var(--bord2);"></div>
 
-      <button class="action-btn exit" onclick="salirSesion()">
-        ← Salir de la sesión
-      </button>
+      <!-- GRABACIÓN -->
+      <button class="action-btn teal" id="btn-grab" onclick="toggleGrabacion()">⏺ Grabar sesión</button>
+      <div class="action-btn-note" id="grab-note">Guarda el transcript al terminar</div>
 
-      <div class="prog-wrap" id="prog-wrap">
-        <div class="prog-head"><span>Progreso</span><span id="prog-label">0 / 0</span></div>
-        <div class="prog-bg"><div class="prog-fill" id="prog-fill"></div></div>
+      <button class="action-btn secondary" onclick="descargarTranscript()" id="btn-dl-transcript" style="display:none;">⬇ Descargar transcript</button>
+
+      <div style="height:1px;background:var(--bord2);"></div>
+
+      <button class="action-btn exit" onclick="salirSesion()">← Salir de la sesión</button>
+
+      <div class="prog-wrap" id="prog-wrap2">
+        <div class="prog-head"><span>Progreso</span><span id="prog-label2">0 / 0</span></div>
+        <div class="prog-bg"><div class="prog-fill" id="prog-fill2"></div></div>
       </div>
 
       <div class="tok" id="tok"></div>
@@ -727,7 +506,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
   </div>
 </div>
 
-<!-- MODAL NOTA -->
+<!-- MODAL NOTA FINAL -->
 <div class="modal-ov" id="modal">
   <div class="modal-box">
     <div class="m-ey">Lex Oral · Resultado de evaluación oral</div>
@@ -738,6 +517,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
     <div class="m-cpt" id="m-cpt">calculando…</div>
     <div class="m-div"></div>
     <div class="m-fb" id="m-fb">—</div>
+
+    <!-- FEEDBACK POR PREGUNTA -->
+    <div id="m-qfb-wrap" style="display:none;">
+      <div style="font-family:var(--fm);font-size:10px;color:var(--ink3);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;">Feedback por pregunta</div>
+      <div class="m-qfb" id="m-qfb-list"></div>
+    </div>
+
+    <div class="m-div"></div>
     <div class="m-desg">
       <div class="m-row"><span>Preguntas respondidas</span><span id="r-q">—</span></div>
       <div class="m-row"><span>Palabras promedio</span><span id="r-p">—</span></div>
@@ -746,8 +533,22 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
     </div>
     <div class="m-btns">
       <button class="mbtn s" onclick="cerrarModal()">Cerrar</button>
+      <button class="mbtn g" onclick="descargarTranscriptModal()">⬇ Transcript</button>
       <button class="mbtn s" onclick="salirSesion()">← Inicio</button>
       <button class="mbtn p" onclick="nuevaSesionModal()">↺ Repetir</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL HISTORIAL -->
+<div class="modal-ov" id="modal-hist">
+  <div class="modal-box hist-modal-box">
+    <div class="m-ey">Lex Oral · Historial de sesiones</div>
+    <div class="hist-list" id="hist-list"></div>
+    <div class="m-div"></div>
+    <div class="m-btns">
+      <button class="mbtn s" onclick="cerrarHistorial()">Cerrar</button>
+      <button class="mbtn s" onclick="limpiarHistorial()" style="color:var(--red);">🗑 Limpiar todo</button>
     </div>
   </div>
 </div>
@@ -756,58 +557,45 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 const BACKEND = '';
 const INTLABELS = ['','Muy suave','Suave','Moderada','Intensa','Extrema'];
 const TERMINOS = /artículo|ley|código|jurisprudencia|doctrina|tribunal|derecho|norma|contrato|obligación|delito|pena|sentencia|recurso|constitución|decreto|filosofía|lógica|concepto|juicio|raciocinio|silogismo|definición|premisa|inducción|deducción/gi;
+const LS_KEY = 'lexoral_historial_v2';
 
 const S = {
   on:false, prof:'rigorista', inten:3, modo:'libre',
   msgs:[], topic:'', qn:0, pregHechas:0,
   tim:0, timI:null, rec:null, micOn:false,
   totalTokens:0,
+  grabando:false,
+  transcript:[],         // {rol, texto, hora}
+  qFeedbacks:[],         // feedback por pregunta {q, fb, nivel}
   stats:{ palabras:0, respuestas:0, terminos:0, tiempos:[], ultimaQ:0 },
 };
 
 const PF = {
-  rigorista:  { name:'Dr. Rigorista',   sub:'Evaluador técnico exhaustivo',         icon:'⚖️', glasses:true,  browAng:-10, mouth:'neutral',pitch:.88, rate:.88, tieColor:'#8b1a1a',
-    sys:function(t,i,e){return 'Eres el Dr. Rigorista, evaluador riguroso y exigente de pruebas orales de Derecho. No toleras respuestas vagas ni imprecisas. Exiges precision tecnica. Intensidad '+i+'/5.\n'+buildTopicBlock(t)+'\nSolo espanol. Sin listas. Max 3 oraciones. Inicia con UNA pregunta amplia sobre el tema asignado.'+e;}},
-  dialéctico: { name:'Prof. Dialéctico', sub:'Interrogación basada en razonamiento', icon:'🔍', glasses:false, browAng:0,   mouth:'slight', pitch:1.0, rate:.85, tieColor:'#1a3a6a',
-    sys:function(t,i,e){return 'Eres el Prof. Dialectico. Usas la interrogacion dialectica: cada respuesta genera una nueva pregunta que lleva al alumno a razonar. Nunca das la respuesta directa. Intensidad '+i+'/5.\n'+buildTopicBlock(t)+'\nSolo espanol. Sin listas. Max 3 oraciones.'+e;}},
-  académico:  { name:'Prof. Académico',  sub:'Corrección guiada y pedagógica',       icon:'🎓', glasses:false, browAng:7,   mouth:'smile',  pitch:1.08,rate:.98, tieColor:'#1e5a28',
-    sys:function(t,i,e){return 'Eres el Prof. Academico, pedagogico y estructurado. Corriges con detalle, explicas errores y refuerzas conceptos. Intensidad '+i+'/5.\n'+buildTopicBlock(t)+'\nSolo espanol. Sin listas. Max 3 oraciones.'+e;}},
-  socrático:  { name:'Prof. Socrático',  sub:'Mayéutica y descubrimiento',           icon:'📜', glasses:false, browAng:4,   mouth:'slight', pitch:1.04,rate:.87, tieColor:'#5a3a10',
-    sys:function(t,i,e){return 'Eres el Prof. Socratico. Usas la mayeutica: guias al alumno a descubrir la verdad por si mismo mediante preguntas sucesivas. Eres paciente y filosofico. Intensidad '+i+'/5.\n'+buildTopicBlock(t)+'\nSolo espanol. Sin listas. Max 3 oraciones.'+e;}},
-  examinador: { name:'Prof. Examinador', sub:'Simulación de examen real',             icon:'📋', glasses:false, browAng:-5,  mouth:'frown',  pitch:.80, rate:.92, tieColor:'#3a3a3a',
-    sys:function(t,i,e){return 'Eres el Prof. Examinador. Simulas un examen oral real de facultad de Derecho: tono formal, preguntas directas, sin explicaciones extras. El alumno debe responder como en tribunal. Intensidad '+i+'/5.\n'+buildTopicBlock(t)+'\nSolo espanol. Sin listas. Max 2 oraciones por turno.'+e;}},
+  rigorista:  { name:'Dr. Rigorista',   sub:'Evaluador técnico exhaustivo',         icon:'⚖️', pitch:.88, rate:.88 },
+  'dialéctico':{ name:'Prof. Dialéctico',sub:'Interrogación basada en razonamiento',icon:'🔍', pitch:1.0, rate:.85 },
+  'académico': { name:'Prof. Académico', sub:'Corrección guiada y pedagógica',       icon:'🎓', pitch:1.08,rate:.98 },
+  'socrático': { name:'Prof. Socrático', sub:'Mayéutica y descubrimiento',           icon:'📜', pitch:1.04,rate:.87 },
+  examinador:  { name:'Prof. Examinador',sub:'Simulación de examen real',            icon:'📋', pitch:.80, rate:.92 },
 };
 
-function extraerTemas(topic) {
-  var lineas = topic.split('\n').map(function(l){return l.trim();}).filter(function(l){return l.length>15;});
-  var temas = [];
-  var pat = /^(clase|unidad|tema|cap[íi]tulo|secci[oó]n|\d+[\.\-\)])/i;
-  lineas.forEach(function(l){
-    if(pat.test(l)||(l===l.toUpperCase()&&l.length>10&&l.length<80)) temas.push(l.substring(0,80));
+// ── VIDEO DEL PROFESOR ─────────────────────────────────────────────────────
+function initVideo() {
+  var video = document.getElementById('prof-video');
+  var img   = document.getElementById('prof-img-fallback');
+  if (!video) return;
+  video.addEventListener('loadeddata', function() {
+    video.classList.add('loaded');
+    img.style.display = 'none';
   });
-  if(temas.length<3){
-    lineas.forEach(function(l){
-      if(l.length>40&&l.length<100&&temas.length<8){
-        var p=l.split(' ').slice(0,8).join(' ');
-        if(!temas.includes(p)) temas.push(p);
-      }
-    });
-  }
-  return temas.slice(0,10);
+  video.addEventListener('error', function() {
+    video.style.display = 'none';
+    img.style.display   = 'block';
+  });
+  // Intentar cargar — si no existe el archivo, caerá al error
+  video.load();
 }
 
-function buildTopicBlock(topic) {
-  if(!topic) return 'ATENCION: Sin apuntes. Pide al alumno que cargue material.';
-  var seed = Math.floor(Math.random()*1000);
-  var temas = extraerTemas(topic);
-  var temaInicial = temas.length>0 ? temas[seed%temas.length] : '';
-  var b = '=== APUNTES DEL ALUMNO ===\n'+topic+'\n=== FIN ===\n\n';
-  if(temaInicial) b += 'TEMA OBLIGATORIO: Empieza con una pregunta AMPLIA sobre "'+temaInicial+'". No empieces por otro tema.\n\n';
-  b += 'REGLAS: Solo pregunta sobre temas de los apuntes. NUNCA repitas una pregunta ya hecha. Empieza general, luego profundiza.';
-  return b;
-}
-
-// SERVIDOR
+// ── SERVER CHECK ───────────────────────────────────────────────────────────
 async function checkServer() {
   try {
     var r = await fetch(BACKEND+'/api/health',{signal:AbortSignal.timeout(4000)});
@@ -825,7 +613,7 @@ async function checkServer() {
   }
 }
 
-// PANTALLA 1 — SELECCIONES
+// ── CONFIG ─────────────────────────────────────────────────────────────────
 function selProf(el) {
   document.querySelectorAll('.ec').forEach(function(c){c.classList.remove('active');});
   el.classList.add('active');
@@ -841,41 +629,38 @@ function updInt(v) {
   document.getElementById('iv').textContent = INTLABELS[v];
 }
 function handleFile(inp) {
-  var f=inp.files[0];if(!f)return;
+  var f=inp.files[0]; if(!f) return;
   document.getElementById('ufn').textContent='Leyendo…';
   document.getElementById('ua').classList.add('has');
   var reader=new FileReader();
   reader.onload=function(ev){
-    var text=ev.target.result.substring(0,8000);
-    S.topic='[Apuntes: '+f.name+']\n'+text;
+    S.topic='[Apuntes: '+f.name+']\n'+ev.target.result.substring(0,8000);
     document.getElementById('ufn').textContent='✓ '+f.name;
   };
   reader.readAsText(f);
 }
 
-// TRANSICIÓN A SESIÓN
+// ── TRANSICIÓN ─────────────────────────────────────────────────────────────
 function irASesion() {
   var textArea = document.getElementById('mt').value.trim();
   if(!S.topic && textArea) S.topic = textArea;
-
   var p = PF[S.prof];
   document.getElementById('ses-icon').textContent = p.icon;
   document.getElementById('ses-nombre').textContent = p.name;
   document.getElementById('av-name').textContent = p.name;
   document.getElementById('av-sub').textContent = p.sub;
   document.getElementById('typ-av').textContent = p.icon;
-  applyAvatar(S.prof);
-
   document.getElementById('s-config').classList.add('off');
   document.getElementById('s-session').classList.remove('off');
+  initVideo();
 }
 
 function salirSesion() {
   if(S.on && !confirm('¿Salir de la sesión?')) return;
-  // Detener voz al salir
   if('speechSynthesis' in window) window.speechSynthesis.cancel();
   var video = document.getElementById('prof-video');
   if(video){ video.pause(); video.currentTime=0; }
+  if(S.grabando) detenerGrabacion();
   resetSesion();
   document.getElementById('s-session').classList.add('off');
   document.getElementById('s-config').classList.remove('off');
@@ -883,42 +668,112 @@ function salirSesion() {
 }
 
 function resetSesion() {
-  S.on=false;S.msgs=[];S.qn=0;S.pregHechas=0;S.tim=0;
+  S.on=false; S.msgs=[]; S.qn=0; S.pregHechas=0; S.tim=0;
+  S.transcript=[]; S.qFeedbacks=[];
   S.stats={palabras:0,respuestas:0,terminos:0,tiempos:[],ultimaQ:0};
   clearInterval(S.timI);
-  if(S.rec)S.rec.stop();
+  if(S.rec) S.rec.stop();
   document.getElementById('ui').disabled=true;
   document.getElementById('bs').disabled=true;
   document.getElementById('btn-nota').style.display='none';
   document.getElementById('nota-note').style.display='none';
   document.getElementById('prog-wrap').style.display='none';
+  document.getElementById('prog-wrap2').style.display='none';
+  document.getElementById('btn-dl-transcript').style.display='none';
   document.getElementById('ses-badge').className='ses-badge inactiva';
   document.getElementById('ses-badge').textContent='Inactiva';
   document.getElementById('tmr').textContent='00:00';
   setSt('','INACTIVO');
   actualizarStatsUI();
+  S.grabando=false;
+  document.getElementById('btn-grab').textContent='⏺ Grabar sesión';
+  document.getElementById('btn-grab').className='action-btn teal';
+  document.getElementById('grab-note').textContent='Guarda el transcript al terminar';
+  document.getElementById('rec-indicator').classList.remove('show');
   var c=document.getElementById('chat');
-  c.innerHTML='<div class="empty-msg" id="empty">El evaluador está listo. Pulsa <strong>Iniciar pregunta</strong> para comenzar.</div><div class="typing" id="typ"><div class="msg-av" id="typ-av">'+PF[S.prof].icon+'</div><div class="typing-bub"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>';
+  c.innerHTML='<div class="empty-msg" id="empty">El evaluador está listo. Pulsa <strong>Iniciar pregunta</strong> para comenzar.</div>'
+    +'<div class="typing" id="typ"><div class="msg-av" id="typ-av">'+PF[S.prof].icon+'</div><div class="typing-bub"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>';
   document.getElementById('ql').innerHTML='<div style="font-family:var(--fm);font-size:10px;color:var(--ink3);">Las preguntas aparecerán aquí.</div>';
   document.getElementById('btn-iniciar').textContent='▶ Iniciar pregunta';
+  document.getElementById('btn-iniciar').disabled=false;
 }
 
-// AVATAR
-function applyAvatar(k) {
-  // Avatar es ahora PNG — solo actualizamos nombre y subtítulo
-  var p = PF[k];
-  var nameEl = document.getElementById('av-name');
-  var subEl  = document.getElementById('av-sub');
-  if(nameEl) nameEl.textContent = p.name;
-  if(subEl)  subEl.textContent  = p.sub;
+// ── GRABACIÓN ──────────────────────────────────────────────────────────────
+function toggleGrabacion() {
+  if(!S.grabando) iniciarGrabacion();
+  else detenerGrabacion();
+}
+function iniciarGrabacion() {
+  S.grabando = true;
+  S.transcript = [];
+  document.getElementById('btn-grab').textContent='⏹ Detener grabación';
+  document.getElementById('btn-grab').className='action-btn danger';
+  document.getElementById('grab-note').textContent='Grabando la sesión…';
+  document.getElementById('rec-indicator').classList.add('show');
+  document.getElementById('btn-dl-transcript').style.display='none';
+  appendTranscript('SISTEMA', 'Grabación iniciada — '+new Date().toLocaleString('es-CL'));
+}
+function detenerGrabacion() {
+  S.grabando = false;
+  document.getElementById('btn-grab').textContent='⏺ Grabar sesión';
+  document.getElementById('btn-grab').className='action-btn teal';
+  document.getElementById('grab-note').textContent='Grabación finalizada';
+  document.getElementById('rec-indicator').classList.remove('show');
+  document.getElementById('btn-dl-transcript').style.display='block';
+  appendTranscript('SISTEMA', 'Grabación detenida — '+new Date().toLocaleString('es-CL'));
+}
+function appendTranscript(rol, texto) {
+  if(!S.grabando && rol !== 'SISTEMA') return;
+  var hora = new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  S.transcript.push({ rol:rol, texto:texto, hora:hora });
+}
+function descargarTranscript() { _doDescargarTranscript(); }
+function descargarTranscriptModal() { _doDescargarTranscript(); }
+function _doDescargarTranscript() {
+  if(!S.transcript.length){ alert('No hay transcript. Activa la grabación antes de iniciar.'); return; }
+  var p = PF[S.prof];
+  var m=String(Math.floor(S.tim/60)).padStart(2,'0'), s=String(S.tim%60).padStart(2,'0');
+  var lineas = [
+    '════════════════════════════════════════════════════',
+    '  LEX ORAL — Transcript de Sesión',
+    '════════════════════════════════════════════════════',
+    '  Evaluador : '+p.name,
+    '  Intensidad: '+INTLABELS[S.inten],
+    '  Duración  : '+m+':'+s,
+    '  Fecha     : '+new Date().toLocaleString('es-CL'),
+    '════════════════════════════════════════════════════',
+    '',
+  ];
+  S.transcript.forEach(function(t){
+    lineas.push('['+t.hora+'] '+t.rol);
+    lineas.push(t.texto);
+    lineas.push('');
+  });
+  if(S.qFeedbacks.length){
+    lineas.push('════════════════════════════════════════════════════');
+    lineas.push('  FEEDBACK POR PREGUNTA');
+    lineas.push('════════════════════════════════════════════════════');
+    S.qFeedbacks.forEach(function(f,i){
+      lineas.push('Pregunta '+(i+1)+': '+f.q.substring(0,80));
+      lineas.push('Nivel: '+f.nivel+'  |  '+f.fb);
+      lineas.push('');
+    });
+  }
+  var blob = new Blob([lineas.join('\n')], {type:'text/plain;charset=utf-8'});
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
+  a.href   = url;
+  a.download= 'lexoral-sesion-'+Date.now()+'.txt';
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
-// SESIÓN
+// ── SESIÓN ─────────────────────────────────────────────────────────────────
 async function iniciar() {
-  S.on=true;S.pregHechas=0;
+  S.on=true; S.pregHechas=0;
   S.stats={palabras:0,respuestas:0,terminos:0,tiempos:[],ultimaQ:Date.now()};
   var empty=document.getElementById('empty');
-  if(empty)empty.style.display='none';
+  if(empty) empty.style.display='none';
   document.getElementById('ses-badge').className='ses-badge activa';
   document.getElementById('ses-badge').textContent='Activa';
   document.getElementById('ui').disabled=false;
@@ -927,28 +782,35 @@ async function iniciar() {
   document.getElementById('nota-note').style.display='block';
   document.getElementById('btn-iniciar').textContent='▶ Ya iniciada';
   document.getElementById('btn-iniciar').disabled=true;
-  if(S.modo!=='libre'){document.getElementById('prog-wrap').style.display='block';actualizarProgreso();}
+  if(S.modo!=='libre'){
+    document.getElementById('prog-wrap').style.display='block';
+    document.getElementById('prog-wrap2').style.display='block';
+    actualizarProgreso();
+  }
   startTmr();
   await askFirst();
 }
 
 async function nuevaQ() {
   if(!S.on) return iniciar();
-  S.msgs=[];S.qn=0;S.pregHechas=0;
+  S.msgs=[]; S.qn=0; S.pregHechas=0;
   S.stats={palabras:0,respuestas:0,terminos:0,tiempos:[],ultimaQ:Date.now()};
   var c=document.getElementById('chat');
   c.innerHTML='<div class="typing" id="typ"><div class="msg-av">'+PF[S.prof].icon+'</div><div class="typing-bub"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>';
   document.getElementById('ql').innerHTML='<div style="font-family:var(--fm);font-size:10px;color:var(--ink3);">Las preguntas aparecerán aquí.</div>';
   actualizarStatsUI();
-  if(S.modo!=='libre')actualizarProgreso();
+  if(S.modo!=='libre') actualizarProgreso();
   await askFirst();
 }
 
 function actualizarProgreso() {
-  if(S.modo==='libre')return;
+  if(S.modo==='libre') return;
   var lim=parseInt(S.modo);
-  document.getElementById('prog-fill').style.width=Math.min(100,(S.pregHechas/lim)*100)+'%';
+  var pct=Math.min(100,(S.pregHechas/lim)*100);
+  document.getElementById('prog-fill').style.width=pct+'%';
   document.getElementById('prog-label').textContent=S.pregHechas+' / '+lim;
+  document.getElementById('prog-fill2').style.width=pct+'%';
+  document.getElementById('prog-label2').textContent=S.pregHechas+' / '+lim;
 }
 
 async function askFirst() {
@@ -956,44 +818,73 @@ async function askFirst() {
   setSt('speaking','PENSANDO'); showTyp(true);
   try {
     var res=await apiChat([{role:'user',content:'Comienza la prueba oral.'}]);
-    showTyp(false);addMsg('prof',res);logQ(res);doSpeak(res);
+    showTyp(false); addMsg('prof',res); logQ(res); doSpeak(res);
     S.msgs.push({role:'assistant',content:res});
-    S.pregHechas=1;actualizarProgreso();
-  } catch(e){showTyp(false);addMsg('prof','Error: '+e.message);setSt('','ERROR');}
+    appendTranscript(PF[S.prof].name, res);
+    S.pregHechas=1; actualizarProgreso();
+  } catch(e){ showTyp(false); addMsg('prof','Error: '+e.message); setSt('','ERROR'); }
 }
 
+// RESPUESTA + FEEDBACK INLINE
 async function send() {
   var inp=document.getElementById('ui');
   var text=inp.value.trim();
-  if(!text||!S.on)return;
-  inp.value='';ar(inp);
+  if(!text||!S.on) return;
+  inp.value=''; ar(inp);
   var ahora=Date.now();
   if(S.stats.ultimaQ) S.stats.tiempos.push((ahora-S.stats.ultimaQ)/1000);
   addMsg('alu',text);
+  appendTranscript('Alumno', text);
   S.msgs.push({role:'user',content:text});
   actualizarStatsRespuesta(text);
-  setSt('speaking','PENSANDO');showTyp(true);
+  setSt('speaking','PENSANDO'); showTyp(true);
   try {
-    var res=await apiChat(S.msgs);
-    showTyp(false);addMsg('prof',res);
+    // Pedir respuesta + micro-feedback en paralelo
+    var [res, fbData] = await Promise.all([
+      apiChat(S.msgs),
+      pedirFeedbackRapido(S.msgs),
+    ]);
+    showTyp(false);
+    addMsg('prof', res, fbData);
+    appendTranscript(PF[S.prof].name, res);
     S.msgs.push({role:'assistant',content:res});
-    doSpeak(res);S.pregHechas++;actualizarProgreso();
+    // Guardar feedback de esta pregunta
+    var lastQ = S.qFeedbacks.length>0 ? '' : (S.msgs.find(function(m){return m.role==='assistant';}) || {content:''}).content;
+    S.qFeedbacks.push({ q: S.msgs.filter(function(m){return m.role==='assistant';}).slice(-2,-1)[0]&&S.msgs.filter(function(m){return m.role==='assistant';}).slice(-2,-1)[0].content || res, fb: fbData.fb, nivel: fbData.nivel });
+    doSpeak(res); S.pregHechas++; actualizarProgreso();
     S.stats.ultimaQ=Date.now();
     if(S.qn%2===1) logQ(res);
-    if(S.modo!=='libre'&&S.pregHechas>=parseInt(S.modo)){setTimeout(pedirNota,800);return;}
-  } catch(e){showTyp(false);addMsg('prof','Error: '+e.message);}
+    if(S.modo!=='libre'&&S.pregHechas>=parseInt(S.modo)){ setTimeout(pedirNota,800); return; }
+  } catch(e){ showTyp(false); addMsg('prof','Error: '+e.message); }
   setSt('active','ACTIVO');
+}
+
+// FEEDBACK RÁPIDO POR RESPUESTA
+async function pedirFeedbackRapido(msgs) {
+  try {
+    var lastQ  = msgs.filter(function(m){return m.role==='assistant';}).slice(-1)[0];
+    var lastA  = msgs.filter(function(m){return m.role==='user';}).slice(-1)[0];
+    if(!lastQ||!lastA) return {fb:'', nivel:'neutral'};
+    var prompt = 'Pregunta: '+lastQ.content+'\nRespuesta del alumno: '+lastA.content
+      +'\n\nEvalúa brevemente (máx 15 palabras) si la respuesta es correcta, parcial o incorrecta. '
+      +'Responde SOLO con JSON: {"fb":"...", "nivel":"ok"|"warn"|"bad"}';
+    var r = await fetch(BACKEND+'/api/chat',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:[{role:'user',content:prompt}], prof:S.prof, intensity:1, topic:''}),
+    });
+    var d = await r.json();
+    return JSON.parse(d.reply.replace(/```json|```/g,'').trim());
+  } catch(e){ return {fb:'', nivel:'neutral'}; }
 }
 
 async function apiChat(messages) {
   var topic=S.topic||'';
-  var sysPrompt=PF[S.prof].sys(topic.substring(0,8000),S.inten,'');
   var r=await fetch(BACKEND+'/api/chat',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({messages:messages,prof:S.prof,intensity:S.inten,topic:topic.substring(0,8000),emotion:'',_system:sysPrompt}),
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({messages:messages,prof:S.prof,intensity:S.inten,topic:topic.substring(0,8000)}),
   });
   var d=await r.json();
-  if(!r.ok)throw new Error(d.error||'Error');
+  if(!r.ok) throw new Error(d.error||'Error');
   if(d.input_tokens||d.output_tokens){
     S.totalTokens+=(d.input_tokens||0)+(d.output_tokens||0);
     document.getElementById('tok').textContent=S.totalTokens.toLocaleString()+' tokens';
@@ -1001,11 +892,11 @@ async function apiChat(messages) {
   return d.reply;
 }
 
-// STATS
+// ── STATS ──────────────────────────────────────────────────────────────────
 function actualizarStatsRespuesta(text) {
   var p=text.trim().split(/\s+/).length;
   var t=(text.match(TERMINOS)||[]).length;
-  S.stats.palabras+=p;S.stats.respuestas++;S.stats.terminos+=t;
+  S.stats.palabras+=p; S.stats.respuestas++; S.stats.terminos+=t;
   actualizarStatsUI();
 }
 function actualizarStatsUI() {
@@ -1017,42 +908,43 @@ function actualizarStatsUI() {
   document.getElementById('stat-seg').textContent=seg;
 }
 
-// CALIFICACIÓN
+// ── CALIFICACIÓN ───────────────────────────────────────────────────────────
 async function terminarExamen() {
-  if(!S.msgs.length){alert('Responde al menos una pregunta primero.');return;}
-  // Detener voz inmediatamente
+  if(!S.msgs.length){ alert('Responde al menos una pregunta primero.'); return; }
   if('speechSynthesis' in window) window.speechSynthesis.cancel();
   stopAbars();
-  var wrap = document.getElementById('av-wrap');
-  if(wrap) wrap.classList.remove('av-talking');
-  var video = document.getElementById('prof-video');
+  document.getElementById('av-wrap').classList.remove('av-talking');
+  var video=document.getElementById('prof-video');
   if(video){ video.pause(); video.currentTime=0; }
   await pedirNota();
 }
+
 async function pedirNota() {
   S.on=false;
-  // Detener cualquier voz activa
   if('speechSynthesis' in window) window.speechSynthesis.cancel();
   stopAbars();
-  var wrap = document.getElementById('av-wrap');
-  if(wrap) wrap.classList.remove('av-talking');
-  var video = document.getElementById('prof-video');
+  document.getElementById('av-wrap').classList.remove('av-talking');
+  var video=document.getElementById('prof-video');
   if(video){ video.pause(); video.currentTime=0; }
-  document.getElementById('ui').disabled=true;document.getElementById('bs').disabled=true;
+  document.getElementById('ui').disabled=true;
+  document.getElementById('bs').disabled=true;
   setSt('speaking','EVALUANDO');
   var resumen=S.msgs.map(function(m){return(m.role==='assistant'?'EVALUADOR: ':'ALUMNO: ')+m.content;}).join('\n\n');
-  var prompt='Eres un evaluador de pruebas orales de Derecho en Chile.\n'
-    +'Nota en escala chilena 1.0-7.0: 1.0-3.9 Reprobado | 4.0 Minimo | 4.0-5.5 Aprobado | 5.5-6.5 Bueno | 6.5-7.0 Excelente\n'
-    +'Se realista. Respuestas parciales no superan 5.0.\n\nSESION:\n'+resumen+'\n\n'
-    +'Responde SOLO con JSON sin markdown:\n'
+  var prompt='Eres evaluador de pruebas orales de Derecho en Chile. Escala 1.0-7.0.\n'
+    +'SESION:\n'+resumen+'\n\n'
+    +'Responde SOLO JSON sin markdown:\n'
     +'{"nota":5.2,"concepto":"Bueno","feedback":"2-3 oraciones de feedback constructivo."}';
   try {
     var r=await fetch(BACKEND+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:prompt}],prof:S.prof,intensity:S.inten,topic:''})});
     var d=await r.json();
-    mostrarNota(JSON.parse(d.reply.replace(/```json|```/g,'').trim()));
-  } catch(e){mostrarNota({nota:4.0,concepto:'Sin calificar',feedback:'No se pudo calcular la nota.'});}
+    var ev=JSON.parse(d.reply.replace(/```json|```/g,'').trim());
+    mostrarNota(ev);
+    guardarEnHistorial(ev);
+  } catch(e){ mostrarNota({nota:4.0,concepto:'Sin calificar',feedback:'No se pudo calcular la nota.'}); }
   setSt('','FINALIZADO');
+  if(S.grabando) detenerGrabacion();
 }
+
 function mostrarNota(ev) {
   var nota=parseFloat(ev.nota)||1;
   var el=document.getElementById('m-nota');
@@ -1060,150 +952,249 @@ function mostrarNota(ev) {
   el.className='m-nota '+(nota>=6?'verde':nota>=4.5?'amarillo':nota>=3?'naranja':'rojo');
   document.getElementById('m-cpt').textContent=(ev.concepto||'')+'  ·  Escala chilena 1.0 – 7.0';
   document.getElementById('m-fb').textContent=ev.feedback||'';
-  var m=String(Math.floor(S.tim/60)).padStart(2,'0'),s=String(S.tim%60).padStart(2,'0');
+  var m=String(Math.floor(S.tim/60)).padStart(2,'0'), s=String(S.tim%60).padStart(2,'0');
   var prom=S.stats.respuestas>0?Math.round(S.stats.palabras/S.stats.respuestas):0;
   document.getElementById('r-q').textContent=S.pregHechas+' respondidas';
   document.getElementById('r-p').textContent=prom+' palabras';
   document.getElementById('r-t').textContent=S.stats.terminos+' detectados';
   document.getElementById('r-d').textContent=m+':'+s;
+
+  // Feedback por pregunta
+  var fbList=document.getElementById('m-qfb-list');
+  fbList.innerHTML='';
+  if(S.qFeedbacks.length){
+    document.getElementById('m-qfb-wrap').style.display='block';
+    S.qFeedbacks.forEach(function(f,i){
+      var chipClass=f.nivel==='ok'?'ok':f.nivel==='bad'?'bad':'warn';
+      var chipLabel=f.nivel==='ok'?'✓ Correcto':f.nivel==='bad'?'✗ Incorrecto':'⚠ Parcial';
+      var d=document.createElement('div');
+      d.className='m-qfb-item';
+      d.innerHTML='<div class="m-qfb-q">Pregunta '+(i+1)+'</div>'
+        +'<div class="m-qfb-text">'+f.fb+'</div>'
+        +'<div class="m-qfb-chip '+chipClass+'">'+chipLabel+'</div>';
+      fbList.appendChild(d);
+    });
+  } else {
+    document.getElementById('m-qfb-wrap').style.display='none';
+  }
+
   document.getElementById('modal').classList.add('show');
 }
-function cerrarModal(){document.getElementById('modal').classList.remove('show');}
-function nuevaSesionModal(){cerrarModal();nuevaQ();}
+function cerrarModal(){ document.getElementById('modal').classList.remove('show'); }
+function nuevaSesionModal(){ cerrarModal(); nuevaQ(); }
 
-// AVATAR SPEAK
-// ── ANIMACIÓN DE BOCA ──────────────────────────────────────
-var _mouthInterval = null;
-
-function startMouth() { /* no-op: video reemplaza animación de boca */ }
-
-
-function stopMouth() { /* no-op */ }
-
-
-function startAbars() {
-  var bars = document.querySelectorAll('#abars .abar');
-  var maxH = [10,16,14,20,10];
-  _abarsInterval = setInterval(function(){
-    bars.forEach(function(b,i){
-      var h = 2 + Math.random()*maxH[i];
-      b.style.height  = h+'px';
-      b.style.opacity = String(0.6 + Math.random()*0.4);
-      b.style.transition = 'height .08s ease';
-    });
-  }, 90);
+// ── HISTORIAL ──────────────────────────────────────────────────────────────
+function guardarEnHistorial(ev) {
+  var historial = JSON.parse(localStorage.getItem(LS_KEY)||'[]');
+  var p=PF[S.prof];
+  var m=String(Math.floor(S.tim/60)).padStart(2,'0'), s=String(S.tim%60).padStart(2,'0');
+  historial.unshift({
+    id: Date.now(),
+    fecha: new Date().toLocaleString('es-CL'),
+    prof: S.prof, profName: p.name, profIcon: p.icon,
+    nota: parseFloat(ev.nota)||1,
+    concepto: ev.concepto||'',
+    feedback: ev.feedback||'',
+    duracion: m+':'+s,
+    preguntas: S.pregHechas,
+    terminos: S.stats.terminos,
+    transcript: S.transcript.slice(),
+    qFeedbacks: S.qFeedbacks.slice(),
+  });
+  if(historial.length>50) historial = historial.slice(0,50);
+  localStorage.setItem(LS_KEY, JSON.stringify(historial));
 }
-var _abarsInterval = null;
+
+function abrirHistorial() {
+  var historial = JSON.parse(localStorage.getItem(LS_KEY)||'[]');
+  var listEl = document.getElementById('hist-list');
+  listEl.innerHTML='';
+  if(!historial.length){
+    listEl.innerHTML='<div class="hist-empty">No hay sesiones guardadas todavía.<br>Completa una sesión para ver tu historial.</div>';
+  } else {
+    historial.forEach(function(h){
+      var notaClass = h.nota>=6?'verde':h.nota>=4.5?'amarillo':h.nota>=3?'naranja':'rojo';
+      var d=document.createElement('div');
+      d.className='hist-item';
+      d.innerHTML='<div class="hist-nota '+notaClass+'">'+h.nota.toFixed(1)+'</div>'
+        +'<div class="hist-info">'
+        +'<div class="hist-prof">'+h.profIcon+' '+h.profName+'</div>'
+        +'<div class="hist-meta">'+h.fecha+' · '+h.duracion+' · '+h.preguntas+' preguntas</div>'
+        +'<div class="hist-meta" style="margin-top:3px;color:var(--ink2);">'+h.concepto+(h.feedback?' — '+h.feedback.substring(0,60)+'…':'')+'</div>'
+        +'</div>';
+      if(h.transcript&&h.transcript.length){
+        var dl=document.createElement('button');
+        dl.className='hist-dl';
+        dl.textContent='⬇ Transcript';
+        dl.onclick=function(e){ e.stopPropagation(); descargarTranscriptHistorial(h); };
+        d.appendChild(dl);
+      }
+      listEl.appendChild(d);
+    });
+  }
+  document.getElementById('modal-hist').classList.add('show');
+}
+function cerrarHistorial(){ document.getElementById('modal-hist').classList.remove('show'); }
+function limpiarHistorial(){
+  if(!confirm('¿Eliminar todo el historial?')) return;
+  localStorage.removeItem(LS_KEY);
+  abrirHistorial();
+}
+function descargarTranscriptHistorial(h) {
+  var lineas=[
+    '════════════════════════════════════════════════════',
+    '  LEX ORAL — Transcript de Sesión',
+    '════════════════════════════════════════════════════',
+    '  Evaluador : '+h.profName,
+    '  Nota      : '+h.nota.toFixed(1)+' / 7.0 ('+h.concepto+')',
+    '  Fecha     : '+h.fecha,
+    '  Duración  : '+h.duracion,
+    '════════════════════════════════════════════════════',
+    '',
+  ];
+  (h.transcript||[]).forEach(function(t){
+    lineas.push('['+t.hora+'] '+t.rol);
+    lineas.push(t.texto);
+    lineas.push('');
+  });
+  if(h.qFeedbacks&&h.qFeedbacks.length){
+    lineas.push('════════════════════════════════════════════════════');
+    lineas.push('  FEEDBACK POR PREGUNTA');
+    lineas.push('════════════════════════════════════════════════════');
+    h.qFeedbacks.forEach(function(f,i){
+      lineas.push('Pregunta '+(i+1)+': '+f.q.substring(0,80));
+      lineas.push(f.nivel+' — '+f.fb);
+      lineas.push('');
+    });
+  }
+  var blob=new Blob([lineas.join('\n')],{type:'text/plain;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url; a.download='lexoral-'+h.id+'.txt'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── AUDIO BARS ─────────────────────────────────────────────────────────────
+var _abarsInterval=null;
+function startAbars() {
+  var bars=document.querySelectorAll('#abars .abar');
+  var maxH=[10,16,14,20,10];
+  _abarsInterval=setInterval(function(){
+    bars.forEach(function(b,i){
+      b.style.height=(2+Math.random()*maxH[i])+'px';
+      b.style.opacity=String(0.6+Math.random()*0.4);
+    });
+  },90);
+}
 function stopAbars() {
   clearInterval(_abarsInterval);
   document.querySelectorAll('#abars .abar').forEach(function(b){
-    b.style.height='2px'; b.style.opacity='0.2'; b.style.transition='height .3s ease';
+    b.style.height='2px'; b.style.opacity='0.2';
   });
 }
 
+// ── SPEAK ──────────────────────────────────────────────────────────────────
 function doSpeak(text) {
-  var wrap  = document.getElementById('av-wrap');
-  var video = document.getElementById('prof-video');
-
+  var wrap=document.getElementById('av-wrap');
+  var video=document.getElementById('prof-video');
   wrap.classList.add('av-talking');
   setSt('speaking','HABLANDO');
   startAbars();
-
-  // Reproducir video (sin sonido — el TTS pone el audio)
-  if(video) {
-    video.muted = true;
-    video.play().catch(function(){});
-  }
-
+  if(video){ video.muted=true; video.play().catch(function(){}); }
   if('speechSynthesis' in window){
     window.speechSynthesis.cancel();
-    var u = new SpeechSynthesisUtterance(text);
-    u.lang  = 'es-ES';
-    u.rate  = PF[S.prof].rate;
-    u.pitch = PF[S.prof].pitch;
-    var vs = window.speechSynthesis.getVoices();
-    var ev = vs.find(function(v){ return v.lang.startsWith('es'); });
-    if(ev) u.voice = ev;
-    u.onend = function(){ stopSpeak(); };
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang='es-ES'; u.rate=PF[S.prof].rate; u.pitch=PF[S.prof].pitch;
+    var vs=window.speechSynthesis.getVoices();
+    var ev=vs.find(function(v){return v.lang.startsWith('es');});
+    if(ev) u.voice=ev;
+    u.onend=function(){ stopSpeak(); };
     window.speechSynthesis.speak(u);
-  } else {
-    setTimeout(stopSpeak, 3200);
-  }
+  } else { setTimeout(stopSpeak,3200); }
 }
-
 function stopSpeak() {
-  var wrap  = document.getElementById('av-wrap');
-  var video = document.getElementById('prof-video');
-
+  var wrap=document.getElementById('av-wrap');
+  var video=document.getElementById('prof-video');
   wrap.classList.remove('av-talking');
   stopAbars();
   setSt('active','ACTIVO');
-
-  // Pausar video cuando termina de hablar
-  if(video) {
-    video.pause();
-    video.currentTime = 0;
-  }
-
-  if(Math.random() > .4){
+  if(video){ video.pause(); video.currentTime=0; }
+  if(Math.random()>.4){
     wrap.classList.add('av-nodding');
-    setTimeout(function(){ wrap.classList.remove('av-nodding'); }, 1300);
+    setTimeout(function(){wrap.classList.remove('av-nodding');},1300);
   }
 }
 
-// CHAT UI
-function addMsg(role,text) {
-  var c=document.getElementById('chat'),t=document.getElementById('typ');
+// ── CHAT UI ────────────────────────────────────────────────────────────────
+function addMsg(role,text,fbData) {
+  var c=document.getElementById('chat'), t=document.getElementById('typ');
   var d=document.createElement('div');
   d.className='msg '+(role==='prof'?'prof':'alu');
   var tm=new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
   var icon=role==='prof'?PF[S.prof].icon:'👤';
   var nm=role==='prof'?PF[S.prof].name:'Alumno';
-  d.innerHTML='<div class="msg-av">'+icon+'</div><div class="msg-body"><div class="mmeta">'+nm+' &middot; '+tm+'</div><div class="bub">'+text.replace(/\n/g,'<br>')+'</div></div>';
-  c.insertBefore(d,t);c.scrollTop=99999;
+
+  var chipHtml='';
+  if(role==='alu'&&fbData&&fbData.fb){
+    var cc=fbData.nivel==='ok'?'ok':fbData.nivel==='bad'?'bad':'warn';
+    var cl=fbData.nivel==='ok'?'✓ Correcto':fbData.nivel==='bad'?'✗ Incorrecto':'⚠ Parcial';
+    chipHtml='<div class="fb-chip '+cc+'" title="'+fbData.fb+'">'+cl+' — '+fbData.fb.substring(0,40)+(fbData.fb.length>40?'…':'')+'</div>';
+  }
+
+  d.innerHTML='<div class="msg-av">'+icon+'</div>'
+    +'<div class="msg-body"><div class="mmeta">'+nm+' · '+tm+'</div>'
+    +'<div class="bub">'+text.replace(/\n/g,'<br>')+'</div>'
+    +chipHtml+'</div>';
+  c.insertBefore(d,t);
+  c.scrollTop=99999;
 }
-function showTyp(v){document.getElementById('typ').style.display=v?'flex':'none';if(v)document.getElementById('chat').scrollTop=99999;}
+function showTyp(v){
+  document.getElementById('typ').style.display=v?'flex':'none';
+  if(v) document.getElementById('chat').scrollTop=99999;
+}
 function logQ(text) {
   S.qn++;
   var ql=document.getElementById('ql');
-  if(S.qn===1)ql.innerHTML='';
+  if(S.qn===1) ql.innerHTML='';
   ql.querySelectorAll('.qi').forEach(function(q){q.classList.remove('active');});
-  var d=document.createElement('div');d.className='qi active';
+  var d=document.createElement('div');
+  d.className='qi active';
   d.innerHTML='<div class="qi-n">Pregunta '+S.qn+'</div>'+(text.length>80?text.substring(0,80)+'…':text);
   ql.appendChild(d);
 }
 
-// TIMER
+// ── TIMER ──────────────────────────────────────────────────────────────────
 function startTmr() {
-  clearInterval(S.timI);S.tim=0;
+  clearInterval(S.timI); S.tim=0;
   S.timI=setInterval(function(){
     S.tim++;
     document.getElementById('tmr').textContent=String(Math.floor(S.tim/60)).padStart(2,'0')+':'+String(S.tim%60).padStart(2,'0');
   },1000);
 }
 
-// STATUS
+// ── STATUS ─────────────────────────────────────────────────────────────────
 function setSt(t,txt) {
   var d=document.getElementById('av-sdot');
   d.className='av-sdot'+(t?' '+t:'');
   document.getElementById('av-stxt').textContent=txt;
 }
 
-// MIC
+// ── MIC ────────────────────────────────────────────────────────────────────
 function togMic() {
   if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){alert('Usa Chrome para el micrófono.');return;}
   if(S.micOn){if(S.rec)S.rec.stop();S.micOn=false;document.getElementById('bm').classList.remove('rec');document.getElementById('srec').classList.remove('show');return;}
   var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  S.rec=new SR();S.rec.lang='es-CL';S.rec.continuous=true;S.rec.interimResults=true;
+  S.rec=new SR(); S.rec.lang='es-CL'; S.rec.continuous=true; S.rec.interimResults=true;
   S.rec.onresult=function(e){var t='';for(var i=e.resultIndex;i<e.results.length;i++)t+=e.results[i][0].transcript;document.getElementById('ui').value=t;ar(document.getElementById('ui'));};
   S.rec.onend=function(){S.micOn=false;document.getElementById('bm').classList.remove('rec');document.getElementById('srec').classList.remove('show');};
-  S.rec.start();S.micOn=true;document.getElementById('bm').classList.add('rec');document.getElementById('srec').classList.add('show');
+  S.rec.start(); S.micOn=true;
+  document.getElementById('bm').classList.add('rec');
+  document.getElementById('srec').classList.add('show');
 }
 
 function hk(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
 function ar(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
-
-if('speechSynthesis' in window)window.speechSynthesis.onvoiceschanged=function(){window.speechSynthesis.getVoices();};
+if('speechSynthesis' in window) window.speechSynthesis.onvoiceschanged=function(){window.speechSynthesis.getVoices();};
 checkServer();
 </script>
 </body>

@@ -57,10 +57,23 @@ function extraerTemas(topic) {
 
 // ─── BLOQUE DE APUNTES CON TEMA ALEATORIO ────────────────────────────────────
 function buildTopicBlock(topic) {
-  if (!topic || topic.trim().length < 20) {
-    return 'SIN APUNTES: El alumno no ha cargado material. Pídele amablemente que pegue sus apuntes antes de comenzar. No hagas preguntas de contenido todavía.';
+  // Sin nada — Derecho general
+  if (!topic || topic.trim().length < 3) {
+    return 'El alumno no ha cargado apuntes específicos. '
+      + 'Evalúa Derecho general chileno: conceptos fundamentales, fuentes del derecho, '
+      + 'acto jurídico, responsabilidad civil, derecho penal básico, derecho constitucional. '
+      + 'Empieza con una pregunta amplia y fundamental.';
   }
 
+  // Si es texto corto (un tema, no apuntes completos)
+  if (topic.trim().length < 200) {
+    var tema = topic.replace('[Apuntes: ]', '').trim();
+    return 'El alumno quiere ser evaluado sobre el siguiente tema: "' + tema + '".\n\n'
+      + 'Evalúa ese tema en profundidad usando tu conocimiento de Derecho chileno. '
+      + 'Empieza con la definición más fundamental del tema y progresa hacia aspectos más complejos.';
+  }
+
+  // Apuntes completos
   var seed = Math.floor(Math.random() * 1000);
   var temas = extraerTemas(topic);
   var temaInicial = temas.length > 0 ? temas[seed % temas.length] : '';
@@ -68,10 +81,12 @@ function buildTopicBlock(topic) {
   var bloque = '=== APUNTES DEL ALUMNO ===\n' + topic + '\n=== FIN DE APUNTES ===\n\n';
 
   if (temaInicial) {
-    bloque += 'TEMA DE INICIO OBLIGATORIO (semilla ' + seed + '): Debes empezar evaluando el tema: "' + temaInicial + '". Empieza con la pregunta mas GENERAL posible sobre ese tema. No empieces por otro tema.\n\n';
+    bloque += 'TEMA DE INICIO OBLIGATORIO: Empieza evaluando "' + temaInicial + '". '
+      + 'Empieza con la pregunta más GENERAL posible sobre ese tema.\n\n';
   }
 
-  bloque += 'REGLA ABSOLUTA: Solo pregunta sobre conceptos que aparezcan explicitamente en los apuntes. PROHIBIDO inventar temas, autores o definiciones que no esten en el texto.';
+  bloque += 'REGLA: Solo pregunta sobre conceptos que aparezcan en los apuntes. '
+    + 'PROHIBIDO inventar temas que no estén en el texto.';
 
   return bloque;
 }

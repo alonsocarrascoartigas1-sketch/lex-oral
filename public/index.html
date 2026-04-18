@@ -868,7 +868,7 @@ function handleFile(inp) {
 function irASesion() {
   var textArea = document.getElementById('mt').value.trim();
   if(!S.topic && textArea) S.topic = textArea;
-  if(!S.topic || S.topic.trim().length < 10) {
+  if(!S.topic && !document.getElementById('mt').value.trim()) {
   document.getElementById('cfg-note').textContent = '⚠️ Debes cargar tus apuntes primero.';
   document.getElementById('cfg-note').style.color = 'var(--red)';
   setTimeout(function(){ 
